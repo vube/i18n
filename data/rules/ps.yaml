@@ -1,0 +1,9 @@
+plural: "2A"
+direction: "RTL"
+numbers:
+  symbols:
+    decimal: "٫"
+    group:   "٬"
+    percent: "٪"
+  formats:
+    currency: "#,##0.00 ¤"

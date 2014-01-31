@@ -1,0 +1,9 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  formats:
+    currency: "¤#,##0.00"
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} Dola ya Marekani|{n} Dola ya Marekani"

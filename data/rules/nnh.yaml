@@ -1,0 +1,7 @@
+plural: 2A
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "."
+    percent:  "%"

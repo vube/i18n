@@ -1,0 +1,10 @@
+plural: "2A"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal: "."
+    group:   ","
+    negative: "-"
+currencies:
+  USD:
+    display: "{n} संयुक्त राज्य डलर"

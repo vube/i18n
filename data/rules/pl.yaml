@@ -1,0 +1,17 @@
+plural:    "4C"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    decimal: "#,##0.###"
+    currency: "#,##0.00 ¤;(#,##0.00 ¤)"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    symbol:  "US$"
+    display: "{n} dolar amerykański|{n} dolary amerykańskie|{n} dolarów amerykańskich|{n} dolara amerykańskiego"

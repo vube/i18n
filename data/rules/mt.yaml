@@ -1,0 +1,8 @@
+plural:    "4E"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  "."
+    group:    ","
+  formats:
+    currency: "¤#,##0.00"

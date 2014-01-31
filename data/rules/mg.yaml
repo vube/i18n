@@ -1,0 +1,8 @@
+plural:    "2B"
+direction: "LTR"
+numbers:
+  formats:
+    currency: "¤#,##0.00"
+currencies:
+  USD:
+    display: "{n} Dolara amerikanina|{n} Dolara amerikanina"

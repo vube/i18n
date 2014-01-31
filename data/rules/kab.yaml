@@ -1,0 +1,12 @@
+plural:    "2C"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+  formats:
+    currency: "#,##0.00¤"
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} Adular WD|{n} Adular WD"

@@ -1,0 +1,8 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  formats:
+    currency: "¤#,##0.00;(¤#,##0.00)"
+currencies:
+  USD:
+    display: "{n} Dola eel Marekani|{n} Dola eel Marekani"

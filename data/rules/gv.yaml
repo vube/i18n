@@ -1,0 +1,5 @@
+plural: "2F"
+direction: "LTR"
+numbers:
+  formats:
+    currency: "¤#,##0.00"

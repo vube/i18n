@@ -1,0 +1,13 @@
+plural:    "1"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  "."
+    group:    ","
+  formats:
+    decimal:  "#,##0.###"
+    currency: "#,##0.00¤"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    display: "{n} Ihela ya Malekani"

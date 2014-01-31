@@ -1,0 +1,12 @@
+plural: "2B"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  "."
+    group:    ","
+  formats:
+    decimal:  "#,##0.###"
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} Amɛrika Dɔla|{n} Amɛrika Dɔla"

@@ -1,0 +1,6 @@
+numbers:
+  formats:
+    currency: "¤#,##0.00"
+currencies:
+  USD:
+    symbol:  "US$"

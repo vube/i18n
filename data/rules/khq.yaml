@@ -1,0 +1,10 @@
+plural:    "1"
+direction: "LTR"
+numbers:
+  symbols:
+    group:    " "
+  formats:
+    currency: "#,##0.00¤"
+currencies:
+  USD:
+    display: "{n} Ameriki Dollar"

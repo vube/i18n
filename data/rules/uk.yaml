@@ -1,0 +1,16 @@
+plural: "4B"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    decimal: "#,##0.###"
+    currency: "#,##0.00 ¤"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    display: "{n} долар США|{n} долари США|{n} доларів США|{n} долара США"

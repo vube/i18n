@@ -1,0 +1,17 @@
+plural: "4A"
+direction: "RTL"
+numbers:
+  symbols:
+    decimal:  "."
+    group:    ","
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    decimal: "#,##0.###"
+    currency: "#,##0.00 ¤"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    symbol:  "US$"
+    display: "{n} דולר אמריקאי|{n} דולר אמריקאי|{n} דולר אמריקאי|{n} דולר אמריקאי"

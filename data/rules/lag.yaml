@@ -1,0 +1,5 @@
+plural:    "3F"
+direction: "LTR"
+currencies:
+  USD:
+    display: "{n} Dóola ya Amerɨ́ka|{n} Dóola ya Amerɨ́ka|{n} Dóola ya Amerɨ́ka"

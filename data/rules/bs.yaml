@@ -1,0 +1,10 @@
+plural: "4B"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal: ","
+    group:   "."
+currencies:
+  USD:
+    display: "{n} američki dolar|{n} američka dolara|{n} američkih dolara|{n} američkih dolara"
+    

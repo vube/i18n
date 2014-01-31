@@ -1,0 +1,11 @@
+plural:    "5A"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  "."
+    group:    ","
+  formats:
+    currency: "¤#,##0.00"
+currencies:
+  USD:
+    display: "{n} Dollar S.A.M.|{n} Dollar S.A.M.|{n} Dollar S.A.M.|{n} Dollar S.A.M.|{n} Dollar S.A.M."

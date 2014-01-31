@@ -1,0 +1,15 @@
+plural:    "3G"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    currency: "#,##0.00¤"
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} ⴰⴷⵓⵍⴰⵔ ⵏ ⵉⵡⵓⵏⴰⴽ ⵉⵎⵓⵏⵏ"

@@ -1,0 +1,11 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal: ","
+    group:   " "
+  formats:
+    currency: "#,##0.00 ¤"
+currencies:
+  USD:
+    display: "{n} АҚШ доллары|{n} АҚШ доллары"

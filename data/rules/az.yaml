@@ -1,0 +1,15 @@
+plural: "1"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal: ","
+    group:   "."
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    currency: "¤ #,##0.00"
+currencies:
+  USD:
+    symbol:  "ABŞ$"
+    display: "{n} ABŞ dolları"

@@ -1,0 +1,9 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  formats:
+    currency: "¤#,##0.00;(¤#,##0.00)"
+currencies:
+  USD:
+    symbol:  "US$"
+    display: "{n} us ga dollar|{n} us ga dollar"

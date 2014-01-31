@@ -1,0 +1,10 @@
+plural:    "5B"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} dollar SU|{n} dollar SU|{n} dollar SU|{n} dollar SU|{n} dollar SU"

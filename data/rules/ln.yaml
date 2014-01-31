@@ -1,0 +1,15 @@
+plural:    "2B"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "."
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    decimal:  "#,##0.###"
+    currency: "#,##0.00 ¤"
+currencies:
+  USD:
+    display: "{n} Dolarɛ ya Ameriki|{n} Dolarɛ ya Ameriki"

@@ -1,0 +1,6 @@
+plural:    "1"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "."

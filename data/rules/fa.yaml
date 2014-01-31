@@ -1,0 +1,16 @@
+plural:    "1"
+direction: "RTL"
+numbers:
+  symbols:
+    decimal:  "٫"
+    group:    "٬"
+    negative: "−"
+    percent:  "٪"
+    permille: "؉"
+  formats:
+    decimal: "#,##0.###"
+    currency: "¤#,##0.00;‎(¤#,##0.00)"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    display: "{n} دلار امریکا"

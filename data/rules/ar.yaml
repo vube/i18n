@@ -1,0 +1,17 @@
+plural: "6A"
+direction: "RTL"
+numbers:
+  symbols:
+    decimal:  "٫"
+    group:    "٬"
+    negative: "-"
+    percent:  "٪"
+    permille: "؉"
+  formats:
+    decimal:  "#0.###;#0.###-"
+    currency: "¤ #0.00;¤ #0.00-"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    symbol:  "US$"
+    display: "{n} ولار أمريكي|{n} ولار أمريكي|{n} دولار أمريكي|{n} دولار أمريكي|{n} دولار أمريكي|{n} دولار أمريكي"

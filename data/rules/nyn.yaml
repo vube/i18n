@@ -1,0 +1,10 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  formats:
+    decimal:  "#,##0.###"
+    currency: "¤#,##0.00;-#,##0.00¤"
+    percent:  "#,##0%"
+currencies:
+  USD:
+    display: "{n} Doora ya America|{n} Doora ya America"

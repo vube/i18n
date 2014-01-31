@@ -1,0 +1,9 @@
+plural:    "2B"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal: ","
+    group:   " "
+currencies:
+  USD:
+    display:  "{n} АҚШ доллари|{n} АҚШ доллари"

@@ -1,0 +1,8 @@
+plural:    "2B"
+direction: "LTR"
+numbers:
+  symbols:
+    group:    " "
+currencies:
+  USD:
+    display: "{n} dolar amerikin"

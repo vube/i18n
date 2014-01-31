@@ -1,0 +1,11 @@
+plural: "2C"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+  formats:
+    currency: "#,##0.00 ¤"
+currencies:
+  USD:
+    display: "{n} Dolaar Dowlaaji Dentuɗi|{n} Dolaar Dowlaaji Dentuɗi"

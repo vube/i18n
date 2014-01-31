@@ -1,0 +1,12 @@
+plural:    "1"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "."
+  formats:
+    decimal:  "#,##0.###"
+    currency: "¤#,##0.00"
+currencies:
+  USD:
+    display: "{n} Dola ya Marekani"

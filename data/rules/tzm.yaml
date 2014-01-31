@@ -1,0 +1,12 @@
+plural:    "2E"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    " "
+  formats:
+    currency: "#,##0.00 ¤"
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} Ḍular Umirikani|{n} Ḍular Umirikani"

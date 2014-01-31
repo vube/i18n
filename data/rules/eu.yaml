@@ -1,0 +1,16 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "."
+    negative: "-"
+    percent:  "%"
+    permille: "‰"
+  formats:
+    decimal:  "#,##0.###"
+    currency: "#,##0.00 ¤;(#,##0.00 ¤)"
+    percent:  "% #,##0"
+currencies:
+  USD:
+    display: "{n} AEBetako dolar|{n} AEBetako dolar"

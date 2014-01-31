@@ -1,0 +1,11 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "."
+  formats:
+    currency: "#,##0.00¤"
+currencies:
+  USD:
+    display: "{n} Dólar norte-americano|{n} Dólar norte-americano"

@@ -1,0 +1,3 @@
+numbers:
+  formats:
+    currency: "¤#,##0.00"

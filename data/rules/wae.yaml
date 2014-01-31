@@ -1,0 +1,10 @@
+plural:    "2A"
+direction: "LTR"
+numbers:
+  symbols:
+    decimal:  ","
+    group:    "’"
+currencies:
+  USD:
+    symbol:  "$"
+    display: "{n} Unbekannti Wãrig|{n} Unbekannti Wãrig"
