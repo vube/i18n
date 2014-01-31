@@ -82,10 +82,10 @@ func (t *translatorRules) load(files []string) (errors []error) {
 
 	if t.Direction == "" {
 		errors = append(errors, translatorError{message: "missing direction rule"})
-		t.Direction = "LTR"
-	} else if t.Direction != "LTR" && t.Direction != "RTL" {
+		t.Direction = direction_ltr
+	} else if t.Direction != direction_ltr && t.Direction != direction_rtl {
 		errors = append(errors, translatorError{message: "invalid direction rule: " + t.Direction})
-		t.Direction = "LTR"
+		t.Direction = direction_ltr
 	}
 
 	return

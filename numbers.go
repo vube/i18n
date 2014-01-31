@@ -248,10 +248,10 @@ func chunkString(str string, size int) []string {
 	return chunks
 }
 
-// numberRound takes a number and returns a string containing a rounded down
-// version of the number with the number of decimal places requested.  If this
-// would result in the right most decimal place(s) containing "0"s, then all
-// "0"s on the end of the decimal portion will be truncated.
+// numberRound takes a number and returns a string containing a rounded to the
+// even with the number of decimal places requested.  If this would result in
+// the right most decimal place(s) containing "0"s, then all "0"s on the end of
+// the decimal portion will be truncated.
 func numberRound(number float64, decimals int) string {
 
 	if number == float64(int64(number)) {

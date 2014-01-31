@@ -4,6 +4,7 @@ import (
 	// standard library
 	"io/ioutil"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -39,6 +40,13 @@ type Translator struct {
 type translatorError struct {
 	translator *Translator
 	message    string
+}
+
+var pathSeparator string
+
+func init() {
+	p := path.Join("a", "b")
+	pathSeparator = p[1 : len(p)-1]
 }
 
 // Error satisfies the error interface requirements
@@ -96,36 +104,36 @@ func NewTranslatorFactory(rulesPaths []string, messagesPaths []string, fallbackL
 	foundRules := fallbackLocale == ""
 	foundMessages := fallbackLocale == ""
 
-	for _, path := range rulesPaths {
-		path = strings.TrimRight(path, "/")
-		_, err := os.Stat(path)
+	for _, p := range rulesPaths {
+		p = strings.TrimRight(p, pathSeparator)
+		_, err := os.Stat(p)
 		if err != nil {
-			errors = append(errors, translatorError{message: "can't read rules path " + path + ": " + err.Error()})
+			errors = append(errors, translatorError{message: "can't read rules path " + p + ": " + err.Error()})
 		}
 
 		if !foundRules {
-			_, err = os.Stat(path + "/" + fallbackLocale + ".yaml")
+			_, err = os.Stat(p + pathSeparator + fallbackLocale + ".yaml")
 			if err == nil {
 				foundRules = true
 			}
 		}
 	}
 
-	for _, path := range messagesPaths {
-		path = strings.TrimRight(path, "/")
-		_, err := os.Stat(path)
+	for _, p := range messagesPaths {
+		p = strings.TrimRight(p, pathSeparator)
+		_, err := os.Stat(p)
 		if err != nil {
-			errors = append(errors, translatorError{message: "can't read messages path " + path + ": " + err.Error()})
+			errors = append(errors, translatorError{message: "can't read messages path " + p + ": " + err.Error()})
 		}
 
 		if !foundMessages {
-			_, err = os.Stat(path + "/" + fallbackLocale + ".yaml")
+			_, err = os.Stat(p + pathSeparator + fallbackLocale + ".yaml")
 			if err == nil {
 				foundMessages = true
 			} else {
-				info, err := os.Stat(path + "/" + fallbackLocale)
+				info, err := os.Stat(p + pathSeparator + fallbackLocale)
 				if err == nil && info.IsDir() {
-					files, _ := filepath.Glob(path + "/" + fallbackLocale + "/*.yaml")
+					files, _ := filepath.Glob(p + pathSeparator + fallbackLocale + pathSeparator + "*.yaml")
 					for _, file := range files {
 						_, err = os.Stat(file)
 						if err == nil {
@@ -173,8 +181,12 @@ func (f *TranslatorFactory) GetTranslator(localeCode string) (t *Translator, err
 		return t, nil
 	}
 
-	if !f.LocaleExists(localeCode) {
+	exists, errs := f.LocaleExists(localeCode)
+	if !exists {
 		errors = append(errors, translatorError{message: "could not find rules and messages for locale " + localeCode})
+	}
+	for _, e := range errs {
+		errors = append(errors, e)
 	}
 
 	rules := new(translatorRules)
@@ -187,9 +199,9 @@ func (f *TranslatorFactory) GetTranslator(localeCode string) (t *Translator, err
 
 	// the load the base (default) rule values
 	// the step above
-	for _, path := range f.rulesPaths {
-		path = strings.TrimRight(path, "/")
-		files = append(files, path+"/base.yaml")
+	for _, p := range f.rulesPaths {
+		p = strings.TrimRight(p, pathSeparator)
+		files = append(files, p+pathSeparator+"base.yaml")
 	}
 
 	// load less specific fallback locale rules
@@ -197,20 +209,20 @@ func (f *TranslatorFactory) GetTranslator(localeCode string) (t *Translator, err
 	if len(parts) > 1 {
 		for i, _ := range parts {
 			fb := strings.Join(parts[0:i+1], "-")
-			for _, path := range f.rulesPaths {
-				path = strings.TrimRight(path, "/")
-				files = append(files, path+"/"+fb+".yaml")
+			for _, p := range f.rulesPaths {
+				p = strings.TrimRight(p, pathSeparator)
+				files = append(files, p+pathSeparator+fb+".yaml")
 			}
 		}
 	}
 
 	// finally load files for this specific locale
-	for _, path := range f.rulesPaths {
-		path = strings.TrimRight(path, "/")
-		files = append(files, path+"/"+localeCode+".yaml")
+	for _, p := range f.rulesPaths {
+		p = strings.TrimRight(p, pathSeparator)
+		files = append(files, p+pathSeparator+localeCode+".yaml")
 	}
 
-	errs := rules.load(files)
+	errs = rules.load(files)
 	for _, err := range errs {
 		errors = append(errors, err)
 	}
@@ -252,7 +264,7 @@ func (f *TranslatorFactory) getFallback(localeCode string) *Translator {
 		parts = parts[0 : len(parts)-1]
 		fb := strings.Join(parts, separator)
 
-		if f.LocaleExists(fb) {
+		if exists, _ := f.LocaleExists(fb); exists {
 			fallback, _ = f.GetTranslator(fb)
 			break
 		}
@@ -263,27 +275,33 @@ func (f *TranslatorFactory) getFallback(localeCode string) *Translator {
 
 // LocaleExists checks to see if any messages files exist for the requested
 // locale string.
-func (f *TranslatorFactory) LocaleExists(localeCode string) bool {
-	for _, path := range f.messagesPaths {
-		path = strings.TrimRight(path, "/")
-		_, err := os.Stat(path + "/" + localeCode + ".yaml")
+func (f *TranslatorFactory) LocaleExists(localeCode string) (exists bool, errs []error) {
+	for _, p := range f.messagesPaths {
+		p = strings.TrimRight(p, pathSeparator)
+		_, err := os.Stat(p + pathSeparator + localeCode + ".yaml")
 		if err == nil {
-			return true
+			exists = true
+			return
+		} else if !os.IsNotExist(err) {
+			errs = append(errs, translatorError{message: "error getting file info: " + err.Error()})
 		}
 
-		info, err := os.Stat(path + "/" + localeCode)
+		info, err := os.Stat(p + pathSeparator + localeCode)
 		if err == nil && info.IsDir() {
-			files, _ := filepath.Glob(path + "/" + localeCode + "/*.yaml")
+			files, _ := filepath.Glob(p + pathSeparator + localeCode + pathSeparator + "*.yaml")
 			for _, file := range files {
 				_, err := os.Stat(file)
 				if err == nil {
-					return true
+					exists = true
+					return
+				} else if !os.IsNotExist(err) {
+					errs = append(errs, translatorError{message: "error getting file info: " + err.Error()})
 				}
 			}
 		}
 	}
 
-	return false
+	return
 }
 
 // Translate returns the translated message, performang any substitutions
@@ -362,9 +380,9 @@ func loadMessages(locale string, messagesPaths []string) (messages map[string]st
 	messages = make(map[string]string)
 
 	found := false
-	for _, path := range messagesPaths {
-		path = strings.TrimRight(path, "/")
-		file := path + "/" + locale + ".yaml"
+	for _, p := range messagesPaths {
+		p = strings.TrimRight(p, pathSeparator)
+		file := p + pathSeparator + locale + ".yaml"
 
 		_, statErr := os.Stat(file)
 		if statErr == nil {
@@ -386,11 +404,11 @@ func loadMessages(locale string, messagesPaths []string) (messages map[string]st
 		}
 
 		// now look for a directory named after this locale and get an *.yaml children
-		dir := path + "/" + locale
+		dir := p + pathSeparator + locale
 		info, statErr := os.Stat(dir)
 		if statErr == nil && info.IsDir() {
 			// found the directory - now look for *.yaml files
-			files, globErr := filepath.Glob(dir + "/*.yaml")
+			files, globErr := filepath.Glob(dir + pathSeparator + "*.yaml")
 			if globErr != nil {
 				errors = append(errors, translatorError{message: "can't glob messages files: " + globErr.Error()})
 			}

@@ -291,8 +291,14 @@ func (s *MySuite) TestLocaleExists(c *C) {
 	)
 
 	c.Assert(f, NotNil)
-	c.Check(f.LocaleExists("en"), Equals, true)
-	c.Check(f.LocaleExists("does-not-exit"), Equals, false)
+
+	exists, errs := f.LocaleExists("en")
+	c.Check(exists, Equals, true)
+	c.Check(errs, HasLen, 0)
+
+	exists, errs = f.LocaleExists("does-not-exit")
+	c.Check(exists, Equals, false)
+	c.Check(errs, HasLen, 0)
 
 	f, _ = NewTranslatorFactory(
 		[]string{"data/rules"},
@@ -301,7 +307,10 @@ func (s *MySuite) TestLocaleExists(c *C) {
 	)
 
 	c.Assert(f, NotNil)
-	c.Check(f.LocaleExists("en"), Equals, true)
+
+	exists, errs = f.LocaleExists("en")
+	c.Check(exists, Equals, true)
+	c.Check(errs, HasLen, 0)
 
 	f, _ = NewTranslatorFactory(
 		[]string{"data/rules"},
@@ -310,7 +319,10 @@ func (s *MySuite) TestLocaleExists(c *C) {
 	)
 
 	c.Assert(f, NotNil)
-	c.Check(f.LocaleExists("en"), Equals, true)
+
+	exists, errs = f.LocaleExists("en")
+	c.Check(exists, Equals, true)
+	c.Check(errs, HasLen, 0)
 
 	f, _ = NewTranslatorFactory(
 		[]string{"data/rules"},
@@ -319,7 +331,10 @@ func (s *MySuite) TestLocaleExists(c *C) {
 	)
 
 	c.Assert(f, NotNil)
-	c.Check(f.LocaleExists("en"), Equals, true)
+
+	exists, errs = f.LocaleExists("en")
+	c.Check(exists, Equals, true)
+	c.Check(errs, HasLen, 0)
 }
 
 func (s *MySuite) TestTranslate(c *C) {
