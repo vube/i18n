@@ -79,5 +79,5 @@ feature that you need in order to use our package, please provide a minimum of
 ### A note on unit testing:
 
 We use the launchpad.net/gocheck package in our unit tests. We ask that you also
-use this package for tests that you right, for consistency sake.
+use this package for tests that you write, for consistency sake.
 
