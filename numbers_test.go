@@ -40,6 +40,42 @@ func (s *MySuite) TestFormatCurrency(c *C) {
 	c.Check(cur, Equals, "($12,345,000,000,000.68)")
 }
 
+func (s *MySuite) TestFormatCurrencyWhole(c *C) {
+
+	f, errors := NewTranslatorFactory(
+		[]string{"data/rules"},
+		[]string{"data/messages"},
+		"en",
+	)
+
+	c.Assert(f, NotNil)
+	c.Check(errors, HasLen, 0)
+
+	tEn, _ := f.GetTranslator("en")
+
+	cur, err := tEn.FormatCurrencyWhole(12345.6789, "USD")
+	c.Check(err, IsNil)
+	c.Check(cur, Equals, "$12,346")
+
+	cur, err = tEn.FormatCurrencyWhole(-12345.6789, "USD")
+	c.Check(err, IsNil)
+	c.Check(cur, Equals, "($12,346)")
+
+	cur, err = tEn.FormatCurrencyWhole(12345.6789, "WHAT???")
+	c.Check(err, NotNil)
+	c.Check(cur, Equals, "WHAT???12,346")
+
+	// try some really big numbers to make sure weird floaty stuff doesn't
+	// happen
+	cur, err = tEn.FormatCurrencyWhole(12345000000000.6789, "USD")
+	c.Check(err, IsNil)
+	c.Check(cur, Equals, "$12,345,000,000,001")
+
+	cur, err = tEn.FormatCurrencyWhole(-12345000000000.6789, "USD")
+	c.Check(err, IsNil)
+	c.Check(cur, Equals, "($12,345,000,000,001)")
+}
+
 func (s *MySuite) TestFormatNumber(c *C) {
 
 	f, errors := NewTranslatorFactory(
@@ -91,6 +127,26 @@ func (s *MySuite) TestFormatNumber(c *C) {
 	c.Check(num, Equals, "n2,,468,,246,,824,,682468..00N‰‰")
 }
 
+func (s *MySuite) TestFormatNumberWhole(c *C) {
+
+	f, errors := NewTranslatorFactory(
+		[]string{"data/rules"},
+		[]string{"data/messages"},
+		"en",
+	)
+
+	c.Assert(f, NotNil)
+	c.Check(errors, HasLen, 0)
+
+	tEn, _ := f.GetTranslator("en")
+
+	num := tEn.FormatNumberWhole(12345.6789)
+	c.Check(num, Equals, "12,346")
+
+	num = tEn.FormatNumberWhole(-12345.6789)
+	c.Check(num, Equals, "-12,346")
+}
+
 func (s *MySuite) TestFormatPercent(c *C) {
 
 	f, errors := NewTranslatorFactory(
@@ -129,7 +185,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 
 	tEn, _ := f.GetTranslator("en")
 
-	format := tEn.parseFormat("#0")
+	format := tEn.parseFormat("#0", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -142,7 +198,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
 
-	format = tEn.parseFormat("#0%")
+	format = tEn.parseFormat("#0%", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -155,7 +211,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "%")
 
-	format = tEn.parseFormat("#0‰")
+	format = tEn.parseFormat("#0‰", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -168,7 +224,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "‰")
 
-	format = tEn.parseFormat("#0P;#0N")
+	format = tEn.parseFormat("#0P;#0N", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -181,7 +237,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "P")
 
-	format = tEn.parseFormat("P#0;N#0")
+	format = tEn.parseFormat("P#0;N#0", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -194,7 +250,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "P")
 	c.Check(format.positiveSuffix, Equals, "")
 
-	format = tEn.parseFormat("#00000.00000")
+	format = tEn.parseFormat("#00000.00000", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -207,7 +263,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
 
-	format = tEn.parseFormat("#0.#####")
+	format = tEn.parseFormat("#0.#####", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 0)
 	c.Check(format.groupSizeMain, Equals, 0)
@@ -220,7 +276,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
 
-	format = tEn.parseFormat("##,#0")
+	format = tEn.parseFormat("##,#0", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 2)
 	c.Check(format.groupSizeMain, Equals, 2)
@@ -233,7 +289,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
 
-	format = tEn.parseFormat("##,###,#0")
+	format = tEn.parseFormat("##,###,#0", true)
 	c.Assert(format, NotNil)
 	c.Check(format.groupSizeFinal, Equals, 3)
 	c.Check(format.groupSizeMain, Equals, 2)
@@ -245,6 +301,27 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.negativeSuffix, Equals, "")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
+
+	// test includeDecimalDigits true vs false
+	enDecimal := "#,##0.###"
+	formatWith := tEn.parseFormat(enDecimal, true)
+	formatWithout := tEn.parseFormat(enDecimal, false)
+	c.Assert(formatWith, NotNil)
+	c.Check(formatWith.maxDecimalDigits, Equals, 3)
+	c.Check(formatWith.minDecimalDigits, Equals, 0)
+	c.Assert(formatWithout, NotNil)
+	c.Check(formatWithout.maxDecimalDigits, Equals, 0)
+	c.Check(formatWithout.minDecimalDigits, Equals, 0)
+
+	enCurrency := "¤#,##0.00;(¤#,##0.00)"
+	formatWith = tEn.parseFormat(enCurrency, true)
+	formatWithout = tEn.parseFormat(enCurrency, false)
+	c.Assert(formatWith, NotNil)
+	c.Check(formatWith.maxDecimalDigits, Equals, 2)
+	c.Check(formatWith.minDecimalDigits, Equals, 2)
+	c.Assert(formatWithout, NotNil)
+	c.Check(formatWithout.maxDecimalDigits, Equals, 0)
+	c.Check(formatWithout.minDecimalDigits, Equals, 0)
 }
 
 func (s *MySuite) TestChunkString(c *C) {

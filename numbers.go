@@ -30,7 +30,8 @@ var (
 	// times. There is vey little danger of this list consuming too much memory,
 	// since the data for each of these is pretty small in size, and the same
 	// formats are used by multiple locales.
-	numberFormats = map[string]*numberFormat{}
+	numberFormats           = map[string]*numberFormat{}
+	numberFormatsNoDecimals = map[string]*numberFormat{}
 
 	// prefixSuffixRegex is a regular expression that is used to parse number
 	// formats
@@ -43,7 +44,23 @@ var (
 // instead. If the currency key requested is not recognized, it is used as the
 // symbol, and an error is returned with the formatted string.
 func (t *Translator) FormatCurrency(number float64, currency string) (formatted string, err error) {
-	format := t.parseFormat(t.rules.Numbers.Formats.Currency)
+	format := t.parseFormat(t.rules.Numbers.Formats.Currency, true)
+	result := t.formatNumber(format, number)
+	symbol := currency
+	if c, ok := t.rules.Currencies[currency]; ok {
+		symbol = c.Symbol
+	} else {
+		err = translatorError{translator: t, message: "unknown currency: " + currency}
+	}
+	formatted = strings.Replace(result, "¤", symbol, -1)
+	return
+}
+
+// FormatCurrency does exactly what FormatCurrency does, but it leaves off any
+// decimal places. AKA, it would return $100 rather than $100.00.
+func (t *Translator) FormatCurrencyWhole(number float64, currency string) (formatted string, err error) {
+	format := &*t.parseFormat(t.rules.Numbers.Formats.Currency, false)
+
 	result := t.formatNumber(format, number)
 	symbol := currency
 	if c, ok := t.rules.Currencies[currency]; ok {
@@ -58,101 +75,117 @@ func (t *Translator) FormatCurrency(number float64, currency string) (formatted 
 // FormatNumber takes a float number and returns a properly formatted string
 // representation of that number according to the locale's number format.
 func (t *Translator) FormatNumber(number float64) string {
-	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Decimal), number)
+	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Decimal, true), number)
+}
+
+// FormatNumberWhole does exactly what FormatNumber does, but it leaves off any
+// decimal places. AKA, it would return 100 rather than 100.01.
+func (t *Translator) FormatNumberWhole(number float64) string {
+	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Decimal, false), number)
 }
 
 // FormatPercent takes a float number and returns a properly formatted string
 // representation of that number as a percentage according to the locale's
 // percentage format.
 func (t *Translator) FormatPercent(number float64) string {
-	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Percent), number)
+	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Percent, true), number)
 }
 
 // parseFormat takes a format string and returns a numberFormat instance
-func (t *Translator) parseFormat(pattern string) *numberFormat {
-	if format, ok := numberFormats[pattern]; ok {
-		return format
+func (t *Translator) parseFormat(pattern string, includeDecimalDigits bool) *numberFormat {
+	formatsSlice := numberFormats
+	if !includeDecimalDigits {
+		formatsSlice = numberFormatsNoDecimals
 	}
 
-	format := new(numberFormat)
-	patterns := strings.Split(pattern, ";")
+	if _, ok := formatsSlice[pattern]; !ok {
 
-	matches := prefixSuffixRegex.FindAllStringSubmatch(patterns[0], -1)
-	if len(matches) > 0 {
-		if len(matches[0]) > 1 {
-			format.positivePrefix = matches[0][1]
-		}
-		if len(matches[0]) > 2 {
-			format.positiveSuffix = matches[0][2]
-		}
-	}
+		format := new(numberFormat)
+		patterns := strings.Split(pattern, ";")
 
-	// default values for negative prefix & suffix
-	format.negativePrefix = string(t.rules.Numbers.Symbols.Negative) + string(format.positivePrefix)
-	format.negativeSuffix = format.positiveSuffix
-
-	// see if they are in the pattern
-	if len(patterns) > 1 {
-		matches = prefixSuffixRegex.FindAllStringSubmatch(patterns[1], -1)
-
+		matches := prefixSuffixRegex.FindAllStringSubmatch(patterns[0], -1)
 		if len(matches) > 0 {
 			if len(matches[0]) > 1 {
-				format.negativePrefix = matches[0][1]
+				format.positivePrefix = matches[0][1]
 			}
 			if len(matches[0]) > 2 {
-				format.negativeSuffix = matches[0][2]
+				format.positiveSuffix = matches[0][2]
 			}
 		}
-	}
 
-	pat := patterns[0]
+		// default values for negative prefix & suffix
+		format.negativePrefix = string(t.rules.Numbers.Symbols.Negative) + string(format.positivePrefix)
+		format.negativeSuffix = format.positiveSuffix
 
-	if strings.Index(pat, "%") != -1 {
-		format.multiplier = 100
-	} else if strings.Index(pat, "‰") != -1 {
-		format.multiplier = 1000
-	} else {
-		format.multiplier = 1
-	}
+		// see if they are in the pattern
+		if len(patterns) > 1 {
+			matches = prefixSuffixRegex.FindAllStringSubmatch(patterns[1], -1)
 
-	pos := strings.Index(pat, ".")
-
-	if pos != -1 {
-		pos2 := strings.LastIndex(pat, "0")
-		if pos2 > pos {
-			format.minDecimalDigits = pos2 - pos
+			if len(matches) > 0 {
+				if len(matches[0]) > 1 {
+					format.negativePrefix = matches[0][1]
+				}
+				if len(matches[0]) > 2 {
+					format.negativeSuffix = matches[0][2]
+				}
+			}
 		}
 
-		pos3 := strings.LastIndex(pat, "#")
-		if pos3 >= pos2 {
-			format.maxDecimalDigits = pos3 - pos
+		pat := patterns[0]
+
+		if strings.Index(pat, "%") != -1 {
+			format.multiplier = 100
+		} else if strings.Index(pat, "‰") != -1 {
+			format.multiplier = 1000
 		} else {
-			format.maxDecimalDigits = format.minDecimalDigits
+			format.multiplier = 1
 		}
 
-		pat = pat[0:pos]
-	}
+		pos := strings.Index(pat, ".")
 
-	p := strings.Replace(pat, ",", "", -1)
-	pos = strings.Index(p, "0")
-	if pos != -1 {
-		format.minIntegerDigits = strings.LastIndex(p, "0") - pos + 1
-	}
+		if pos != -1 {
+			pos2 := strings.LastIndex(pat, "0")
+			if pos2 > pos {
+				format.minDecimalDigits = pos2 - pos
+			}
 
-	p = strings.Replace(pat, "#", "0", -1)
-	pos = strings.LastIndex(pat, ",")
-	if pos != -1 {
-		format.groupSizeMain = strings.LastIndex(p, "0") - pos
-		pos2 := strings.LastIndex(p[0:pos], ",")
-		if pos2 != -1 {
-			format.groupSizeFinal = pos - pos2 - 1
-		} else {
-			format.groupSizeFinal = format.groupSizeMain
+			pos3 := strings.LastIndex(pat, "#")
+			if pos3 >= pos2 {
+				format.maxDecimalDigits = pos3 - pos
+			} else {
+				format.maxDecimalDigits = format.minDecimalDigits
+			}
+
+			pat = pat[0:pos]
 		}
+
+		p := strings.Replace(pat, ",", "", -1)
+		pos = strings.Index(p, "0")
+		if pos != -1 {
+			format.minIntegerDigits = strings.LastIndex(p, "0") - pos + 1
+		}
+
+		p = strings.Replace(pat, "#", "0", -1)
+		pos = strings.LastIndex(pat, ",")
+		if pos != -1 {
+			format.groupSizeMain = strings.LastIndex(p, "0") - pos
+			pos2 := strings.LastIndex(p[0:pos], ",")
+			if pos2 != -1 {
+				format.groupSizeFinal = pos - pos2 - 1
+			} else {
+				format.groupSizeFinal = format.groupSizeMain
+			}
+		}
+
+		if !includeDecimalDigits {
+			format.maxDecimalDigits = 0
+			format.minDecimalDigits = 0
+		}
+
+		formatsSlice[pattern] = format
 	}
 
-	numberFormats[pattern] = format
-	return format
+	return formatsSlice[pattern]
 }
 
 // formatNumber takes an arbitrary numberFormat and a number and applies that
