@@ -68,9 +68,9 @@ func SortUniversal(toBeSorted []interface{}, getComparisonValueFunction func(int
 	sort.Sort(sorter)
 }
 
-// SortLocal sorts a generic slice alphabetically for a specific locale.  It
+// SortLocal sorts a generic slice alphabetically for a specific locale. It
 // uses collation information if available for the specific locale requested.
-// It falls back to SortUniversal otherwise.  The func argument tells this
+// It falls back to SortUniversal otherwise. The func argument tells this
 // function what string value to do the comparisons on.
 func SortLocal(locale string, toBeSorted []interface{}, getComparisonValueFunction func(interface{}) string) {
 
@@ -79,14 +79,7 @@ func SortLocal(locale string, toBeSorted []interface{}, getComparisonValueFuncti
 		return
 	}
 
-	tag := language.Make(locale)
-
-	if tag == language.Und {
-		SortUniversal(toBeSorted, getComparisonValueFunction)
-		return
-	}
-
-	collator := collate.New(tag)
+	collator := getCollator(locale)
 
 	if collator == nil {
 		SortUniversal(toBeSorted, getComparisonValueFunction)
@@ -102,9 +95,25 @@ func SortLocal(locale string, toBeSorted []interface{}, getComparisonValueFuncti
 	sort.Sort(sorter)
 }
 
-// Sort sorts a generic slice alphabetically for this translator's locale.  It
+// getCollator returns a collate package Collator pointer. This can result in a
+// panic, so this function must recover from that if it happens.
+func getCollator(locale string) *collate.Collator {
+
+	defer func() {
+		recover()
+	}()
+
+	tag := language.Make(locale)
+
+	if tag == language.Und {
+		return nil
+	}
+	return collate.New(tag)
+}
+
+// Sort sorts a generic slice alphabetically for this translator's locale. It
 // uses collation information if available for the specific locale requested.
-// It falls back to SortUniversal otherwise.  The func argument tells this
+// It falls back to SortUniversal otherwise. The func argument tells this
 // function what string value to do the comparisons on.
 func (t *Translator) Sort(toBeSorted []interface{}, getComparisonValueFunction func(interface{}) string) {
 	SortLocal(t.locale, toBeSorted, getComparisonValueFunction)
