@@ -56,8 +56,8 @@ func (t *Translator) FormatCurrency(number float64, currency string) (formatted 
 	return
 }
 
-// FormatCurrency does exactly what FormatCurrency does, but it leaves off any
-// decimal places. AKA, it would return $100 rather than $100.00.
+// FormatCurrencyWhole does exactly what FormatCurrency does, but it leaves off
+// any decimal places. AKA, it would return $100 rather than $100.00.
 func (t *Translator) FormatCurrencyWhole(number float64, currency string) (formatted string, err error) {
 	format := &*t.parseFormat(t.rules.Numbers.Formats.Currency, false)
 
