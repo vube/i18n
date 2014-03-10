@@ -93,12 +93,15 @@ func (t *Translator) FormatPercent(number float64) string {
 
 // parseFormat takes a format string and returns a numberFormat instance
 func (t *Translator) parseFormat(pattern string, includeDecimalDigits bool) *numberFormat {
-	formatsSlice := numberFormats
-	if !includeDecimalDigits {
-		formatsSlice = numberFormatsNoDecimals
+
+	processed := false
+	if includeDecimalDigits {
+		_, processed = numberFormats[pattern]
+	} else {
+		_, processed = numberFormatsNoDecimals[pattern]
 	}
 
-	if _, ok := formatsSlice[pattern]; !ok {
+	if !processed {
 
 		format := new(numberFormat)
 		patterns := strings.Split(pattern, ";")
@@ -177,15 +180,21 @@ func (t *Translator) parseFormat(pattern string, includeDecimalDigits bool) *num
 			}
 		}
 
-		if !includeDecimalDigits {
+		if includeDecimalDigits {
+			numberFormats[pattern] = format
+		} else {
 			format.maxDecimalDigits = 0
 			format.minDecimalDigits = 0
+			numberFormatsNoDecimals[pattern] = format
 		}
 
-		formatsSlice[pattern] = format
 	}
 
-	return formatsSlice[pattern]
+	if includeDecimalDigits {
+		return numberFormats[pattern]
+	}
+
+	return numberFormatsNoDecimals[pattern]
 }
 
 // formatNumber takes an arbitrary numberFormat and a number and applies that
