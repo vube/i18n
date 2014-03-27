@@ -95,6 +95,20 @@ func (s *MySuite) TestFormatNumber(c *C) {
 	num = tEn.FormatNumber(-12345.6789)
 	c.Check(num, Equals, "-12,345.679")
 
+	num = tEn.FormatNumber(123456789)
+	c.Check(num, Equals, "123,456,789")
+
+	tHi, _ := f.GetTranslator("hi")
+
+	num = tHi.FormatNumber(12345.6789)
+	c.Check(num, Equals, "12,345.679")
+
+	num = tHi.FormatNumber(-12345.6789)
+	c.Check(num, Equals, "-12,345.679")
+
+	num = tHi.FormatNumber(123456789)
+	c.Check(num, Equals, "12,34,56,789")
+
 	format := &(numberFormat{
 		positivePrefix:   "p",
 		positiveSuffix:   "P%",
@@ -291,8 +305,8 @@ func (s *MySuite) TestParseFormat(c *C) {
 
 	format = tEn.parseFormat("##,###,#0", true)
 	c.Assert(format, NotNil)
-	c.Check(format.groupSizeFinal, Equals, 3)
-	c.Check(format.groupSizeMain, Equals, 2)
+	c.Check(format.groupSizeFinal, Equals, 2)
+	c.Check(format.groupSizeMain, Equals, 3)
 	c.Check(format.maxDecimalDigits, Equals, 0)
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)

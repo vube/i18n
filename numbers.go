@@ -59,7 +59,7 @@ func (t *Translator) FormatCurrency(number float64, currency string) (formatted 
 // FormatCurrencyWhole does exactly what FormatCurrency does, but it leaves off
 // any decimal places. AKA, it would return $100 rather than $100.00.
 func (t *Translator) FormatCurrencyWhole(number float64, currency string) (formatted string, err error) {
-	format := &*t.parseFormat(t.rules.Numbers.Formats.Currency, false)
+	format := t.parseFormat(t.rules.Numbers.Formats.Currency, false)
 
 	result := t.formatNumber(format, number)
 	symbol := currency
@@ -171,12 +171,12 @@ func (t *Translator) parseFormat(pattern string, includeDecimalDigits bool) *num
 		p = strings.Replace(pat, "#", "0", -1)
 		pos = strings.LastIndex(pat, ",")
 		if pos != -1 {
-			format.groupSizeMain = strings.LastIndex(p, "0") - pos
+			format.groupSizeFinal = strings.LastIndex(p, "0") - pos
 			pos2 := strings.LastIndex(p[0:pos], ",")
 			if pos2 != -1 {
-				format.groupSizeFinal = pos - pos2 - 1
+				format.groupSizeMain = pos - pos2 - 1
 			} else {
-				format.groupSizeFinal = format.groupSizeMain
+				format.groupSizeMain = format.groupSizeFinal
 			}
 		}
 
