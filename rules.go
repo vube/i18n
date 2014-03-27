@@ -58,10 +58,13 @@ func (t *translatorRules) load(files []string) (errors []error) {
 				errors = append(errors, translatorError{message: "can't open rules file: " + readErr.Error()})
 			}
 
-			yamlErr := goyaml.Unmarshal(contents, t)
+			tNew := new(translatorRules)
+			yamlErr := goyaml.Unmarshal(contents, tNew)
 
 			if yamlErr != nil {
 				errors = append(errors, translatorError{message: "can't load rules YAML: " + yamlErr.Error()})
+			} else {
+				t.merge(tNew)
 			}
 		}
 	}
@@ -89,4 +92,70 @@ func (t *translatorRules) load(files []string) (errors []error) {
 	}
 
 	return
+}
+
+// merge takes another translatorRules instance and safely merges its metadata
+// into this instance. this replaces yaml marshalling directly into the same
+// instance - as that doesn't do what we want for deep merging.
+func (t *translatorRules) merge(tNew *translatorRules) {
+	if tNew.Plural != "" {
+		t.Plural = tNew.Plural
+	}
+
+	if tNew.PluralRuleFunc != nil {
+		t.PluralRuleFunc = tNew.PluralRuleFunc
+	}
+
+	if tNew.Direction != "" {
+		t.Direction = tNew.Direction
+	}
+
+	if tNew.Numbers.Symbols.Decimal != "" {
+		t.Numbers.Symbols.Decimal = tNew.Numbers.Symbols.Decimal
+	}
+	if tNew.Numbers.Symbols.Group != "" {
+		t.Numbers.Symbols.Group = tNew.Numbers.Symbols.Group
+	}
+	if tNew.Numbers.Symbols.Negative != "" {
+		t.Numbers.Symbols.Negative = tNew.Numbers.Symbols.Negative
+	}
+	if tNew.Numbers.Symbols.Percent != "" {
+		t.Numbers.Symbols.Percent = tNew.Numbers.Symbols.Percent
+	}
+	if tNew.Numbers.Symbols.Permille != "" {
+		t.Numbers.Symbols.Permille = tNew.Numbers.Symbols.Permille
+	}
+
+	if tNew.Numbers.Formats.Decimal != "" {
+		t.Numbers.Formats.Decimal = tNew.Numbers.Formats.Decimal
+	}
+	if tNew.Numbers.Formats.Currency != "" {
+		t.Numbers.Formats.Currency = tNew.Numbers.Formats.Currency
+	}
+	if tNew.Numbers.Formats.Percent != "" {
+		t.Numbers.Formats.Percent = tNew.Numbers.Formats.Percent
+	}
+
+	if tNew.Currencies != nil {
+		if t.Currencies == nil {
+			t.Currencies = tNew.Currencies
+		} else {
+			for i, c := range tNew.Currencies {
+				if _, ok := t.Currencies[i]; !ok {
+					t.Currencies[i] = c
+				} else {
+
+					curr := t.Currencies[i]
+
+					if c.Symbol != "" {
+						curr.Symbol = c.Symbol
+					}
+					if c.Translation != "" {
+						curr.Translation = c.Translation
+					}
+					t.Currencies[i] = curr
+				}
+			}
+		}
+	}
 }

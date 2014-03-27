@@ -38,6 +38,13 @@ func (s *MySuite) TestFormatCurrency(c *C) {
 	cur, err = tEn.FormatCurrency(-12345000000000.6789, "USD")
 	c.Check(err, IsNil)
 	c.Check(cur, Equals, "($12,345,000,000,000.68)")
+
+	// Try something that needs a partial fallback
+	tSaq, _ := f.GetTranslator("saq")
+
+	cur, err = tSaq.FormatCurrency(12345.6789, "USD")
+	c.Check(err, IsNil)
+	c.Check(cur, Equals, "US$12,345.68")
 }
 
 func (s *MySuite) TestFormatCurrencyWhole(c *C) {
@@ -87,6 +94,7 @@ func (s *MySuite) TestFormatNumber(c *C) {
 	c.Assert(f, NotNil)
 	c.Check(errors, HasLen, 0)
 
+	// check basic english
 	tEn, _ := f.GetTranslator("en")
 
 	num := tEn.FormatNumber(12345.6789)
@@ -98,6 +106,7 @@ func (s *MySuite) TestFormatNumber(c *C) {
 	num = tEn.FormatNumber(123456789)
 	c.Check(num, Equals, "123,456,789")
 
+	// check Hindi - different group sizes
 	tHi, _ := f.GetTranslator("hi")
 
 	num = tHi.FormatNumber(12345.6789)
@@ -108,6 +117,18 @@ func (s *MySuite) TestFormatNumber(c *C) {
 
 	num = tHi.FormatNumber(123456789)
 	c.Check(num, Equals, "12,34,56,789")
+
+	// check Uzbek - something with a partial fallback
+	tUz, _ := f.GetTranslator("uz")
+
+	num = tUz.FormatNumber(12345.6789)
+	c.Check(num, Equals, "12 345,679")
+
+	num = tUz.FormatNumber(-12345.6789)
+	c.Check(num, Equals, "-12 345,679")
+
+	num = tUz.FormatNumber(123456789)
+	c.Check(num, Equals, "123 456 789")
 
 	format := &(numberFormat{
 		positivePrefix:   "p",

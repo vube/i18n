@@ -201,7 +201,7 @@ func (f *TranslatorFactory) GetTranslator(localeCode string) (t *Translator, err
 	// the step above
 	for _, p := range f.rulesPaths {
 		p = strings.TrimRight(p, pathSeparator)
-		files = append(files, p+pathSeparator+"base.yaml")
+		files = append(files, p+pathSeparator+"root.yaml")
 	}
 
 	// load less specific fallback locale rules
