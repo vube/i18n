@@ -326,7 +326,7 @@ func numberRound(number float64, decimals int) string {
 	if roundUp {
 		// multiply, then ceil, then divide
 		multiplier := math.Pow(float64(10), float64(decimals))
-		multiplied := fmt.Sprintf("%d", int64(math.Ceil(number*multiplier)))
+		multiplied := strconv.FormatFloat(math.Ceil(number*multiplier), 'f', 0, 64)
 
 		str = multiplied[:len(multiplied)-decimals] + "." + multiplied[len(multiplied)-decimals:]
 	}
