@@ -45,6 +45,13 @@ func (s *MySuite) TestFormatCurrency(c *C) {
 	cur, err = tSaq.FormatCurrency(12345.6789, "USD")
 	c.Check(err, IsNil)
 	c.Check(cur, Equals, "US$12,345.68")
+
+	// And one more for with some unusual symbols for good measure
+	tAr, _ := f.GetTranslator("ar")
+
+	cur, err = tAr.FormatCurrency(-12345.6789, "USD")
+	c.Check(err, IsNil)
+	c.Check(cur, Equals, "US$ 12345٫68-")
 }
 
 func (s *MySuite) TestFormatCurrencyWhole(c *C) {

@@ -6,4 +6,4 @@ numbers:
     group:   "٬"
     percent: "٪"
   formats:
-    currency: "#,##0.00 ¤"
+    currency: "#,##0.00 ¤"

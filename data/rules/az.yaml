@@ -8,7 +8,7 @@ numbers:
     percent:  "%"
     permille: "‰"
   formats:
-    currency: "¤ #,##0.00"
+    currency: "¤ #,##0.00"
 currencies:
   USD:
     symbol:  "ABŞ$"

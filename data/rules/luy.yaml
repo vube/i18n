@@ -2,7 +2,7 @@ plural:    "1"
 direction: "LTR"
 numbers:
   formats:
-    currency: "¤#,##0.00;¤- #,##0.00"
+    currency: "¤#,##0.00;¤- #,##0.00"
 currencies:
   USD:
     display: "{n} Dola ya Marekani"

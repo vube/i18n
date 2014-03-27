@@ -2,7 +2,7 @@ plural:    "2A"
 direction: "LTR"
 numbers:
   formats:
-    currency: "#,##0.00 ¤"
+    currency: "#,##0.00 ¤"
 currencies:
   USD:
     display: "{n} Doola ey'Amerika|{n} Doola ey'Amerika"

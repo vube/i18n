@@ -3,5 +3,5 @@ direction: "LTR"
 numbers:
   formats:
     decimal:  "#,##,##0.###"
-    currency: "¤ #,##,##0.00"
+    currency: "¤ #,##,##0.00"
     percent:  "#,##,##0%"

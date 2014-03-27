@@ -6,7 +6,7 @@ numbers:
     group:    " "
   formats:
     decimal:  "#,##0.###"
-    currency: "#,##0.00 ¤"
+    currency: "#,##0.00 ¤"
 currencies:
   USD:
     display: "{n} mɔni mǝ á amɛrika"
