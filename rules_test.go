@@ -12,18 +12,17 @@ func (s *MySuite) TestLoad(c *C) {
 	errs := t.load([]string{"does/not/exist/xx.yaml"})
 	c.Check(errs, Not(HasLen), 0)
 
-	errs = t.load([]string{"data/rules/en.yaml", s.rulesDir + "/en.yaml"})
+	errs = t.load([]string{"data/rules/root.yaml", s.rulesDir + "/en.yaml"})
 	c.Check(errs, HasLen, 0)
-	c.Check(t.Currencies, HasLen, 1)
-	c.Check(t.Currencies["USD"].Symbol, Equals, "$")
-	c.Check(t.Currencies["USD"].Translation, Equals, "{n} US Dollar|{n} US Dollars")
+	c.Check(t.Currencies, Not(HasLen), 0)
+	c.Check(t.Currencies["USD"].Symbol, Equals, "US$")
 	c.Check(t.Direction, Equals, "LTR")
 	c.Check(t.Numbers.Symbols.Decimal, Equals, "≥")
 	c.Check(t.Numbers.Symbols.Group, Equals, "≤")
 	c.Check(t.Numbers.Symbols.Negative, Equals, "-")
 	c.Check(t.Numbers.Symbols.Percent, Equals, "ﬁ")
 	c.Check(t.Numbers.Symbols.Permille, Equals, "‰")
-	c.Check(t.Numbers.Formats.Currency, Equals, "¤#,##0.00;(¤#,##0.00)")
+	c.Check(t.Numbers.Formats.Currency, Equals, "¤\u00a0#,##0.00")
 	c.Check(t.Numbers.Formats.Decimal, Equals, "#,##0.###")
 	c.Check(t.Numbers.Formats.Percent, Equals, "#,##0%")
 	c.Check(t.Plural, Equals, "2A")
@@ -57,17 +56,20 @@ func (s *MySuite) TestLoad(c *C) {
 		c.Check(errs, HasLen, 0)
 	}
 
-	// these are missing plural rule and direction - on purpose
+	// these are missing plural rule - on purpose
 	locales = []string{
 		"en-au",
 		"en-gb",
+		"fr-ca",
 		"nl-be",
+		"pt-br",
 	}
 
 	for _, l := range locales {
 		t := new(translatorRules)
 		errs = t.load([]string{"data/rules/" + l + ".yaml"})
-		c.Check(errs, HasLen, 2)
+		c.Log(l)
+		c.Check(errs, HasLen, 1)
 	}
 }
 

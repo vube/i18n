@@ -318,7 +318,7 @@ func (t *Translator) Translate(key string, substitutions map[string]string) (tra
 		return
 	}
 
-	translation, errors = t.subsitute(t.messages[key], substitutions)
+	translation, errors = t.substitute(t.messages[key], substitutions)
 	return
 }
 
@@ -329,6 +329,10 @@ func (t *Translator) Translate(key string, substitutions map[string]string) (tra
 // translation for the requested key, and empty string and an error will be
 // returned.
 func (t *Translator) Pluralize(key string, number float64, numberStr string) (translation string, errors []error) {
+
+	// TODO: errors are returned when there isn't a substitution - but it is
+	// valid to not have a substitution in cases where there's only one number
+	// for a single plural form. In these cases, no error should be returned.
 
 	if _, ok := t.messages[key]; !ok {
 		if t.fallback != nil && t.fallback != t {
@@ -349,16 +353,21 @@ func (t *Translator) Pluralize(key string, number float64, numberStr string) (tr
 	}
 
 	var errs []error
-	translation, errs = t.subsitute(parts[form], map[string]string{"n": numberStr})
+	translation, errs = t.substitute(parts[form], map[string]string{"n": numberStr})
 	for _, err := range errs {
 		errors = append(errors, err)
 	}
 	return
 }
 
-// subsitute returns a string copy of the input str string will all keys in the
+// Direction returns the text directionality of the locale's writing system
+func (t *Translator) Direction() (direction string) {
+	return t.rules.Direction
+}
+
+// substitute returns a string copy of the input str string will all keys in the
 // substitutions map replaced with their value.
-func (t *Translator) subsitute(str string, substitutions map[string]string) (substituted string, errors []error) {
+func (t *Translator) substitute(str string, substitutions map[string]string) (substituted string, errors []error) {
 
 	substituted = str
 

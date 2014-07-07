@@ -26,6 +26,8 @@ WELCOME      : "Howdy!"
 WELCOME_USER : "Howdy, {user}!"
 `
 	enRules = `
+direction: LTR
+plural: 2A
 numbers:
   symbols:
     decimal:  "≥"
@@ -434,6 +436,26 @@ func (s *MySuite) TestPluralize(c *C) {
 
 }
 
+func (s *MySuite) TestDirection(c *C) {
+	f, errors := NewTranslatorFactory(
+		[]string{"data/rules"},
+		[]string{"data/messages"},
+		"en",
+	)
+
+	c.Assert(f, NotNil)
+	c.Check(errors, HasLen, 0)
+
+	tEn, _ := f.GetTranslator("en")
+	tAr, _ := f.GetTranslator("ar")
+
+	c.Assert(tEn, NotNil)
+	c.Assert(tAr, NotNil)
+
+	c.Check(tEn.Direction(), Equals, "LTR")
+	c.Check(tAr.Direction(), Equals, "RTL")
+}
+
 func (s *MySuite) TestSubstitute(c *C) {
 
 	f, errors := NewTranslatorFactory(
@@ -447,7 +469,7 @@ func (s *MySuite) TestSubstitute(c *C) {
 
 	tEn, _ := f.GetTranslator("en")
 
-	sub, errors := tEn.subsitute("A {n} noise annoys a {n} {o}.", map[string]string{
+	sub, errors := tEn.substitute("A {n} noise annoys a {n} {o}.", map[string]string{
 		"o":         "oyster",
 		"n":         "noisy",
 		"not there": "not there",

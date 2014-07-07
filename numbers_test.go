@@ -51,7 +51,7 @@ func (s *MySuite) TestFormatCurrency(c *C) {
 
 	cur, err = tAr.FormatCurrency(-12345.6789, "USD")
 	c.Check(err, IsNil)
-	c.Check(cur, Equals, "US$ 12345٫68-")
+	c.Check(cur, Equals, "US$ 12,345.68-")
 }
 
 func (s *MySuite) TestFormatCurrencyWhole(c *C) {
@@ -129,13 +129,13 @@ func (s *MySuite) TestFormatNumber(c *C) {
 	tUz, _ := f.GetTranslator("uz")
 
 	num = tUz.FormatNumber(12345.6789)
-	c.Check(num, Equals, "12 345,679")
+	c.Check(num, Equals, "12 345,679")
 
 	num = tUz.FormatNumber(-12345.6789)
-	c.Check(num, Equals, "-12 345,679")
+	c.Check(num, Equals, "-12 345,679")
 
 	num = tUz.FormatNumber(123456789)
-	c.Check(num, Equals, "123 456 789")
+	c.Check(num, Equals, "123 456 789")
 
 	format := &(numberFormat{
 		positivePrefix:   "p",
