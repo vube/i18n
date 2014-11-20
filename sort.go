@@ -5,9 +5,9 @@ import (
 	"sort"
 	"strings"
 
-	"code.google.com/p/go.text/collate"
-	"code.google.com/p/go.text/language"
-	"code.google.com/p/go.text/unicode/norm"
+	"golang.org/x/text/collate"
+	"golang.org/x/text/language"
+	"golang.org/x/text/unicode/norm"
 )
 
 // i18nSorted is a stuct which satisfies the sort interface for sorting
