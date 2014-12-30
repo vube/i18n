@@ -359,19 +359,17 @@ func (t *Translator) formatDateTimeComponentMonthNarrow(month int) string {
 
 // formatDateTimeComponentDayOfWeek renders a day-of-week component.
 func (t *Translator) formatDateTimeComponentDayOfWeek(datetime time.Time, length int) (string, error) {
-	dayOfWeek := int(datetime.Weekday())
-
 	switch length {
 	case datetimeFormatLength1Plus:
-		return t.formatDateTimeComponentDayOfWeekWide(dayOfWeek), nil
+		return t.formatDateTimeComponentDayOfWeekWide(datetime.Weekday()), nil
 	case datetimeFormatLength2Plus:
-		return t.formatDateTimeComponentDayOfWeekShort(dayOfWeek), nil
+		return t.formatDateTimeComponentDayOfWeekShort(datetime.Weekday()), nil
 	case datetimeFormatLengthAbbreviated:
-		return t.formatDateTimeComponentDayOfWeekAbbreviated(dayOfWeek), nil
+		return t.formatDateTimeComponentDayOfWeekAbbreviated(datetime.Weekday()), nil
 	case datetimeFormatLengthWide:
-		return t.formatDateTimeComponentDayOfWeekWide(dayOfWeek), nil
+		return t.formatDateTimeComponentDayOfWeekWide(datetime.Weekday()), nil
 	case datetimeFormatLengthNarrow:
-		return t.formatDateTimeComponentDayOfWeekNarrow(dayOfWeek), nil
+		return t.formatDateTimeComponentDayOfWeekNarrow(datetime.Weekday()), nil
 	}
 
 	return "", translatorError{message: fmt.Sprintf("unsupported year day-of-week: %d", length)}
@@ -379,21 +377,21 @@ func (t *Translator) formatDateTimeComponentDayOfWeek(datetime time.Time, length
 
 // formatDateTimeComponentDayOfWeekAbbreviated renders an abbreviated text
 // day-of-week component.
-func (t *Translator) formatDateTimeComponentDayOfWeekAbbreviated(dayOfWeek int) string {
+func (t *Translator) formatDateTimeComponentDayOfWeekAbbreviated(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
-	case 1:
+	case time.Sunday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Sun
-	case 2:
+	case time.Monday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Mon
-	case 3:
+	case time.Tuesday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Tue
-	case 4:
+	case time.Wednesday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Wed
-	case 5:
+	case time.Thursday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Thu
-	case 6:
+	case time.Friday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Fri
-	case 7:
+	case time.Saturday:
 		return t.rules.DateTime.FormatNames.Days.Abbreviated.Sat
 	}
 
@@ -402,21 +400,21 @@ func (t *Translator) formatDateTimeComponentDayOfWeekAbbreviated(dayOfWeek int) 
 
 // formatDateTimeComponentDayOfWeekAbbreviated renders a
 // shorter-then-abbreviated but still unique text day-of-week component.
-func (t *Translator) formatDateTimeComponentDayOfWeekShort(dayOfWeek int) string {
+func (t *Translator) formatDateTimeComponentDayOfWeekShort(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
-	case 1:
+	case time.Sunday:
 		return t.rules.DateTime.FormatNames.Days.Short.Sun
-	case 2:
+	case time.Monday:
 		return t.rules.DateTime.FormatNames.Days.Short.Mon
-	case 3:
+	case time.Tuesday:
 		return t.rules.DateTime.FormatNames.Days.Short.Tue
-	case 4:
+	case time.Wednesday:
 		return t.rules.DateTime.FormatNames.Days.Short.Wed
-	case 5:
+	case time.Thursday:
 		return t.rules.DateTime.FormatNames.Days.Short.Thu
-	case 6:
+	case time.Friday:
 		return t.rules.DateTime.FormatNames.Days.Short.Fri
-	case 7:
+	case time.Saturday:
 		return t.rules.DateTime.FormatNames.Days.Short.Sat
 	}
 
@@ -425,21 +423,21 @@ func (t *Translator) formatDateTimeComponentDayOfWeekShort(dayOfWeek int) string
 
 // formatDateTimeComponentDayOfWeekWide renders a full text day-of-week
 // component.
-func (t *Translator) formatDateTimeComponentDayOfWeekWide(dayOfWeek int) string {
+func (t *Translator) formatDateTimeComponentDayOfWeekWide(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
-	case 1:
+	case time.Sunday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Sun
-	case 2:
+	case time.Monday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Mon
-	case 3:
+	case time.Tuesday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Tue
-	case 4:
+	case time.Wednesday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Wed
-	case 5:
+	case time.Thursday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Thu
-	case 6:
+	case time.Friday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Fri
-	case 7:
+	case time.Saturday:
 		return t.rules.DateTime.FormatNames.Days.Wide.Sat
 	}
 
@@ -448,21 +446,21 @@ func (t *Translator) formatDateTimeComponentDayOfWeekWide(dayOfWeek int) string 
 
 // formatDateTimeComponentDayOfWeekNarrow renders a super-short day-of-week
 // compontent - not guaranteed to be unique for different days.
-func (t *Translator) formatDateTimeComponentDayOfWeekNarrow(dayOfWeek int) string {
+func (t *Translator) formatDateTimeComponentDayOfWeekNarrow(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
-	case 1:
+	case time.Sunday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Sun
-	case 2:
+	case time.Monday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Mon
-	case 3:
+	case time.Tuesday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Tue
-	case 4:
+	case time.Wednesday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Wed
-	case 5:
+	case time.Thursday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Thu
-	case 6:
+	case time.Friday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Fri
-	case 7:
+	case time.Saturday:
 		return t.rules.DateTime.FormatNames.Days.Narrow.Sat
 	}
 

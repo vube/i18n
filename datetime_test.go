@@ -62,7 +62,7 @@ func (s *MySuite) TestFormatDateTime(c *C) {
 	dtShort, err := tEn.FormatDateTime(DateTimeFormatShort, datetime)
 	c.Check(err, IsNil)
 
-	c.Check(dFull, Equals, "Sunday, January 2, 2006")
+	c.Check(dFull, Equals, "Monday, January 2, 2006")
 	c.Check(dLong, Equals, "January 2, 2006")
 	c.Check(dMedium, Equals, "Jan 2, 2006")
 	c.Check(dShort, Equals, "1/2/06")
@@ -70,7 +70,7 @@ func (s *MySuite) TestFormatDateTime(c *C) {
 	c.Check(tLong, Equals, "3:04:05 PM")
 	c.Check(tMedium, Equals, "3:04:05 PM")
 	c.Check(tShort, Equals, "3:04 PM")
-	c.Check(dtFull, Equals, "Sunday, January 2, 2006 at 3:04:05 PM")
+	c.Check(dtFull, Equals, "Monday, January 2, 2006 at 3:04:05 PM")
 	c.Check(dtLong, Equals, "January 2, 2006 at 3:04:05 PM")
 	c.Check(dtMedium, Equals, "Jan 2, 2006, 3:04:05 PM")
 	c.Check(dtShort, Equals, "1/2/06, 3:04 PM")
@@ -294,7 +294,7 @@ func (s *MySuite) TestFormatDateTime(c *C) {
 
 	// test the private method
 	checkAll := "G y yy yyyy M MM MMM MMMM MMMMM E EE EEE EEEE EEEEE d dd h hh H HH m mm s ss a aaa aaaa aaaaa Q z v 'literal':'literal'   ,   "
-	shouldMatch := "2006 06 2006 1 01 Jan January J Sunday Su Sun Sunday S 2 02 3 03 15 15 4 04 5 05 PM PM PM p    literal#literal"
+	shouldMatch := "2006 06 2006 1 01 Jan January J Monday Mo Mon Monday M 2 02 3 03 15 15 4 04 5 05 PM PM PM p    literal#literal"
 	separator := tEn.rules.DateTime.TimeSeparator
 	tEn.rules.DateTime.TimeSeparator = "#"
 	patternToCheckEverything, _ := tEn.parseDateTimeFormat(checkAll)
@@ -367,23 +367,23 @@ func (s *MySuite) TestFormatDateTimeComponent(c *C) {
 
 	str, err = tEn.formatDateTimeComponent(datetime, "E")
 	c.Check(err, IsNil)
-	c.Check(str, Equals, "Sunday")
+	c.Check(str, Equals, "Monday")
 
 	str, err = tEn.formatDateTimeComponent(datetime, "EE")
 	c.Check(err, IsNil)
-	c.Check(str, Equals, "Su")
+	c.Check(str, Equals, "Mo")
 
 	str, err = tEn.formatDateTimeComponent(datetime, "EEE")
 	c.Check(err, IsNil)
-	c.Check(str, Equals, "Sun")
+	c.Check(str, Equals, "Mon")
 
 	str, err = tEn.formatDateTimeComponent(datetime, "EEEE")
 	c.Check(err, IsNil)
-	c.Check(str, Equals, "Sunday")
+	c.Check(str, Equals, "Monday")
 
 	str, err = tEn.formatDateTimeComponent(datetime, "EEEEE")
 	c.Check(err, IsNil)
-	c.Check(str, Equals, "S")
+	c.Check(str, Equals, "M")
 
 	_, err = tEn.formatDateTimeComponent(datetime, "EEEEEE")
 	c.Check(err, NotNil)
