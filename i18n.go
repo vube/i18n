@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	// third party
-	"launchpad.net/goyaml"
+	"gopkg.in/yaml.v1"
 )
 
 // TranslatorFactory is a struct which contains the info necessary for creating
@@ -400,7 +400,7 @@ func loadMessages(locale string, messagesPaths []string) (messages map[string]st
 				errors = append(errors, translatorError{message: "can't open messages file: " + readErr.Error()})
 			} else {
 				newmap := map[string]string{}
-				yamlErr := goyaml.Unmarshal(contents, &newmap)
+				yamlErr := yaml.Unmarshal(contents, &newmap)
 				if yamlErr != nil {
 					errors = append(errors, translatorError{message: "can't load messages YAML: " + yamlErr.Error()})
 				} else {
@@ -427,7 +427,7 @@ func loadMessages(locale string, messagesPaths []string) (messages map[string]st
 					errors = append(errors, translatorError{message: "can't open messages file: " + readErr.Error()})
 				} else {
 					newmap := map[string]string{}
-					yamlErr := goyaml.Unmarshal(contents, &newmap)
+					yamlErr := yaml.Unmarshal(contents, &newmap)
 					if yamlErr != nil {
 						errors = append(errors, translatorError{message: "can't load messages YAML: " + yamlErr.Error()})
 					} else {
