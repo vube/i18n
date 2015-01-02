@@ -1,7 +1,7 @@
 i18n
 ====
 
-i18n support for golang applications.  Supports message translation with 
+i18n support for golang applications.  Supports message translation with
 placeholders and plurals, locale-specific string sorting, and number/currency
 formatting.
 
@@ -17,13 +17,13 @@ Read the full documentation here: http://godoc.org/github.com/vube/i18n
 License
 -------
 
-As stated about this golang package is released under the MIT License (see 
+As stated about this golang package is released under the MIT License (see
 LICENSE).
 
 ### Third Party Package Licenses
 
 This i18n package makes use of third party packages in addition to the golang
-standard library and supplemental libraries. This package however does not 
+standard library and supplemental libraries. This package however does not
 modify or redistribute any third party package material.
 
 While this i18n package is released under the MIT License, you must ensure that
@@ -36,10 +36,10 @@ This i18n package makes use of the launchpad.net/gocheck package, released under
 a Simplified BSD License. For specific license details, refer directly to the
 the gocheck package.
 
-#### launchpad.net/goyaml
+#### gopkg.in/yaml.v1
 
-This i18n package makes use of the launchpad.net/goyaml package, released under 
-the LGPLv3 License. For specific license details, refer directly to the goyaml
+This i18n package makes use of the gopkg.in/yaml.v1 package, released under
+the LGPLv3 License. For specific license details, refer directly to the yaml
 package.
 
 Call for open source help!
