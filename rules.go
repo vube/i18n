@@ -6,7 +6,7 @@ import (
 	"os"
 
 	// third party
-	"launchpad.net/goyaml"
+	"gopkg.in/yaml.v1"
 )
 
 // constants for text directionality
@@ -179,7 +179,7 @@ func (t *translatorRules) load(files []string) (errors []error) {
 			}
 
 			tNew := new(translatorRules)
-			yamlErr := goyaml.Unmarshal(contents, tNew)
+			yamlErr := yaml.Unmarshal(contents, tNew)
 
 			if yamlErr != nil {
 				errors = append(errors, translatorError{message: "can't load rules YAML: " + yamlErr.Error()})
