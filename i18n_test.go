@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 // passes control of tests off to go-check
@@ -203,7 +203,7 @@ func (s *MySuite) TestGetTranslator(c *C) {
 	c.Check(errors, HasLen, 0)
 	c.Check(tEn.messages, Not(HasLen), 0)
 	c.Check(tEn.locale, Equals, "en")
-	c.Check(tEn.rules, NotNil)
+	c.Check(tEn.Rules, NotNil)
 	c.Check(tEn.fallback, IsNil)
 
 	tFr, errors := f.GetTranslator("fr")
@@ -212,7 +212,7 @@ func (s *MySuite) TestGetTranslator(c *C) {
 	c.Check(errors, HasLen, 0)
 	c.Check(tFr.messages, Not(HasLen), 0)
 	c.Check(tFr.locale, Equals, "fr")
-	c.Check(tFr.rules, NotNil)
+	c.Check(tFr.Rules, NotNil)
 	c.Assert(tFr.fallback, NotNil)
 	c.Check(tFr.fallback, Equals, tEn)
 

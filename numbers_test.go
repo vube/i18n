@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 func (s *MySuite) TestFormatCurrency(c *C) {
@@ -150,11 +150,11 @@ func (s *MySuite) TestFormatNumber(c *C) {
 		groupSizeMain:    3,
 	})
 
-	tEn.rules.Numbers.Symbols.Decimal = ".."
-	tEn.rules.Numbers.Symbols.Group = ",,"
-	tEn.rules.Numbers.Symbols.Negative = "--"
-	tEn.rules.Numbers.Symbols.Percent = "%%"
-	tEn.rules.Numbers.Symbols.Permille = "‰‰"
+	tEn.Rules.Numbers.Symbols.Decimal = ".."
+	tEn.Rules.Numbers.Symbols.Group = ",,"
+	tEn.Rules.Numbers.Symbols.Negative = "--"
+	tEn.Rules.Numbers.Symbols.Percent = "%%"
+	tEn.Rules.Numbers.Symbols.Permille = "‰‰"
 
 	// check numbers with too few integer digits & too many decimal digits
 	num = tEn.formatNumber(format, 1.12341234)
@@ -235,7 +235,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)
 	c.Check(format.multiplier, Equals, 1)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
@@ -248,7 +248,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)
 	c.Check(format.multiplier, Equals, 100)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "%")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "%")
@@ -261,7 +261,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)
 	c.Check(format.multiplier, Equals, 1000)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "‰")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "‰")
@@ -300,7 +300,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 5)
 	c.Check(format.minIntegerDigits, Equals, 5)
 	c.Check(format.multiplier, Equals, 1)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
@@ -313,7 +313,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)
 	c.Check(format.multiplier, Equals, 1)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
@@ -326,7 +326,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)
 	c.Check(format.multiplier, Equals, 1)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
@@ -339,7 +339,7 @@ func (s *MySuite) TestParseFormat(c *C) {
 	c.Check(format.minDecimalDigits, Equals, 0)
 	c.Check(format.minIntegerDigits, Equals, 1)
 	c.Check(format.multiplier, Equals, 1)
-	c.Check(format.negativePrefix, Equals, tEn.rules.Numbers.Symbols.Negative)
+	c.Check(format.negativePrefix, Equals, tEn.Rules.Numbers.Symbols.Negative)
 	c.Check(format.negativeSuffix, Equals, "")
 	c.Check(format.positivePrefix, Equals, "")
 	c.Check(format.positiveSuffix, Equals, "")
