@@ -44,10 +44,10 @@ var (
 // instead. If the currency key requested is not recognized, it is used as the
 // symbol, and an error is returned with the formatted string.
 func (t *Translator) FormatCurrency(number float64, currency string) (formatted string, err error) {
-	format := t.parseFormat(t.rules.Numbers.Formats.Currency, true)
+	format := t.parseFormat(t.Rules.Numbers.Formats.Currency, true)
 	result := t.formatNumber(format, number)
 	symbol := currency
-	if c, ok := t.rules.Currencies[currency]; ok {
+	if c, ok := t.Rules.Currencies[currency]; ok {
 		symbol = c.Symbol
 	} else {
 		err = translatorError{translator: t, message: "unknown currency: " + currency}
@@ -59,11 +59,11 @@ func (t *Translator) FormatCurrency(number float64, currency string) (formatted 
 // FormatCurrencyWhole does exactly what FormatCurrency does, but it leaves off
 // any decimal places. AKA, it would return $100 rather than $100.00.
 func (t *Translator) FormatCurrencyWhole(number float64, currency string) (formatted string, err error) {
-	format := t.parseFormat(t.rules.Numbers.Formats.Currency, false)
+	format := t.parseFormat(t.Rules.Numbers.Formats.Currency, false)
 
 	result := t.formatNumber(format, number)
 	symbol := currency
-	if c, ok := t.rules.Currencies[currency]; ok {
+	if c, ok := t.Rules.Currencies[currency]; ok {
 		symbol = c.Symbol
 	} else {
 		err = translatorError{translator: t, message: "unknown currency: " + currency}
@@ -75,20 +75,20 @@ func (t *Translator) FormatCurrencyWhole(number float64, currency string) (forma
 // FormatNumber takes a float number and returns a properly formatted string
 // representation of that number according to the locale's number format.
 func (t *Translator) FormatNumber(number float64) string {
-	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Decimal, true), number)
+	return t.formatNumber(t.parseFormat(t.Rules.Numbers.Formats.Decimal, true), number)
 }
 
 // FormatNumberWhole does exactly what FormatNumber does, but it leaves off any
 // decimal places. AKA, it would return 100 rather than 100.01.
 func (t *Translator) FormatNumberWhole(number float64) string {
-	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Decimal, false), number)
+	return t.formatNumber(t.parseFormat(t.Rules.Numbers.Formats.Decimal, false), number)
 }
 
 // FormatPercent takes a float number and returns a properly formatted string
 // representation of that number as a percentage according to the locale's
 // percentage format.
 func (t *Translator) FormatPercent(number float64) string {
-	return t.formatNumber(t.parseFormat(t.rules.Numbers.Formats.Percent, true), number)
+	return t.formatNumber(t.parseFormat(t.Rules.Numbers.Formats.Percent, true), number)
 }
 
 // parseFormat takes a format string and returns a numberFormat instance
@@ -117,7 +117,7 @@ func (t *Translator) parseFormat(pattern string, includeDecimalDigits bool) *num
 		}
 
 		// default values for negative prefix & suffix
-		format.negativePrefix = string(t.rules.Numbers.Symbols.Negative) + string(format.positivePrefix)
+		format.negativePrefix = string(t.Rules.Numbers.Symbols.Negative) + string(format.positivePrefix)
 		format.negativeSuffix = format.positiveSuffix
 
 		// see if they are in the pattern
@@ -234,7 +234,7 @@ func (t *Translator) formatNumber(format *numberFormat, number float64) string {
 
 	// if there's a decimal portion, prepend the decimal point symbol
 	if len(decimal) > 0 {
-		decimal = string(t.rules.Numbers.Symbols.Decimal) + decimal
+		decimal = string(t.Rules.Numbers.Symbols.Decimal) + decimal
 	}
 
 	// put the integer portion into properly sized groups
@@ -242,7 +242,7 @@ func (t *Translator) formatNumber(format *numberFormat, number float64) string {
 		if len(integer) > format.groupSizeMain {
 			groupFinal := integer[len(integer)-format.groupSizeFinal:]
 			groupFirst := integer[:len(integer)-format.groupSizeFinal]
-			integer = strings.Join(chunkString(groupFirst, format.groupSizeMain), t.rules.Numbers.Symbols.Group) + t.rules.Numbers.Symbols.Group + groupFinal
+			integer = strings.Join(chunkString(groupFirst, format.groupSizeMain), t.Rules.Numbers.Symbols.Group) + t.Rules.Numbers.Symbols.Group + groupFinal
 		}
 	}
 
@@ -255,8 +255,8 @@ func (t *Translator) formatNumber(format *numberFormat, number float64) string {
 	}
 
 	// replace percents and permilles with the local symbols (likely to be exactly the same)
-	formatted = strings.Replace(formatted, "%", string(t.rules.Numbers.Symbols.Percent), -1)
-	formatted = strings.Replace(formatted, "‰", string(t.rules.Numbers.Symbols.Permille), -1)
+	formatted = strings.Replace(formatted, "%", string(t.Rules.Numbers.Symbols.Percent), -1)
+	formatted = strings.Replace(formatted, "‰", string(t.Rules.Numbers.Symbols.Permille), -1)
 
 	return formatted
 }

@@ -29,7 +29,7 @@ type TranslatorFactory struct {
 type Translator struct {
 	messages map[string]string
 	locale   string
-	rules    *translatorRules
+	Rules    *translatorRules
 	fallback *Translator
 }
 
@@ -236,7 +236,7 @@ func (f *TranslatorFactory) GetTranslator(localeCode string) (t *Translator, err
 	t.locale = localeCode
 	t.messages = messages
 	t.fallback = fallback
-	t.rules = rules
+	t.Rules = rules
 
 	f.translators[localeCode] = t
 
@@ -343,7 +343,7 @@ func (t *Translator) Pluralize(key string, number float64, numberStr string) (tr
 		return
 	}
 
-	form := (t.rules.PluralRuleFunc)(number)
+	form := (t.Rules.PluralRuleFunc)(number)
 
 	parts := strings.Split(t.messages[key], "|")
 
@@ -362,7 +362,7 @@ func (t *Translator) Pluralize(key string, number float64, numberStr string) (tr
 
 // Direction returns the text directionality of the locale's writing system
 func (t *Translator) Direction() (direction string) {
-	return t.rules.Direction
+	return t.Rules.Direction
 }
 
 // substitute returns a string copy of the input str string will all keys in the

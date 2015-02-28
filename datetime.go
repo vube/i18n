@@ -87,37 +87,37 @@ func (t *Translator) FormatDateTime(format int, datetime time.Time) (string, err
 	pattern := ""
 	switch format {
 	case DateFormatFull:
-		pattern = t.rules.DateTime.Formats.Date.Full
+		pattern = t.Rules.DateTime.Formats.Date.Full
 	case DateFormatLong:
-		pattern = t.rules.DateTime.Formats.Date.Long
+		pattern = t.Rules.DateTime.Formats.Date.Long
 	case DateFormatMedium:
-		pattern = t.rules.DateTime.Formats.Date.Medium
+		pattern = t.Rules.DateTime.Formats.Date.Medium
 	case DateFormatShort:
-		pattern = t.rules.DateTime.Formats.Date.Short
+		pattern = t.Rules.DateTime.Formats.Date.Short
 	case TimeFormatFull:
-		pattern = t.rules.DateTime.Formats.Time.Full
+		pattern = t.Rules.DateTime.Formats.Time.Full
 	case TimeFormatLong:
-		pattern = t.rules.DateTime.Formats.Time.Long
+		pattern = t.Rules.DateTime.Formats.Time.Long
 	case TimeFormatMedium:
-		pattern = t.rules.DateTime.Formats.Time.Medium
+		pattern = t.Rules.DateTime.Formats.Time.Medium
 	case TimeFormatShort:
-		pattern = t.rules.DateTime.Formats.Time.Short
+		pattern = t.Rules.DateTime.Formats.Time.Short
 	case DateTimeFormatFull:
-		datePattern := strings.Trim(t.rules.DateTime.Formats.Date.Full, " ,")
-		timePattern := strings.Trim(t.rules.DateTime.Formats.Time.Full, " ,")
-		pattern = getDateTimePattern(t.rules.DateTime.Formats.DateTime.Full, datePattern, timePattern)
+		datePattern := strings.Trim(t.Rules.DateTime.Formats.Date.Full, " ,")
+		timePattern := strings.Trim(t.Rules.DateTime.Formats.Time.Full, " ,")
+		pattern = getDateTimePattern(t.Rules.DateTime.Formats.DateTime.Full, datePattern, timePattern)
 	case DateTimeFormatLong:
-		datePattern := strings.Trim(t.rules.DateTime.Formats.Date.Long, " ,")
-		timePattern := strings.Trim(t.rules.DateTime.Formats.Time.Long, " ,")
-		pattern = getDateTimePattern(t.rules.DateTime.Formats.DateTime.Long, datePattern, timePattern)
+		datePattern := strings.Trim(t.Rules.DateTime.Formats.Date.Long, " ,")
+		timePattern := strings.Trim(t.Rules.DateTime.Formats.Time.Long, " ,")
+		pattern = getDateTimePattern(t.Rules.DateTime.Formats.DateTime.Long, datePattern, timePattern)
 	case DateTimeFormatMedium:
-		datePattern := strings.Trim(t.rules.DateTime.Formats.Date.Medium, " ,")
-		timePattern := strings.Trim(t.rules.DateTime.Formats.Time.Medium, " ,")
-		pattern = getDateTimePattern(t.rules.DateTime.Formats.DateTime.Medium, datePattern, timePattern)
+		datePattern := strings.Trim(t.Rules.DateTime.Formats.Date.Medium, " ,")
+		timePattern := strings.Trim(t.Rules.DateTime.Formats.Time.Medium, " ,")
+		pattern = getDateTimePattern(t.Rules.DateTime.Formats.DateTime.Medium, datePattern, timePattern)
 	case DateTimeFormatShort:
-		datePattern := strings.Trim(t.rules.DateTime.Formats.Date.Short, " ,")
-		timePattern := strings.Trim(t.rules.DateTime.Formats.Time.Short, " ,")
-		pattern = getDateTimePattern(t.rules.DateTime.Formats.DateTime.Short, datePattern, timePattern)
+		datePattern := strings.Trim(t.Rules.DateTime.Formats.Date.Short, " ,")
+		timePattern := strings.Trim(t.Rules.DateTime.Formats.Time.Short, " ,")
+		pattern = getDateTimePattern(t.Rules.DateTime.Formats.DateTime.Short, datePattern, timePattern)
 	default:
 		return "", translatorError{message: "unknown datetime format" + pattern[0:1]}
 	}
@@ -264,29 +264,29 @@ func (t *Translator) formatDateTimeComponentMonth2Plus(month int) string {
 func (t *Translator) formatDateTimeComponentMonthAbbreviated(month int) string {
 	switch month {
 	case 1:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month1
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month1
 	case 2:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month2
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month2
 	case 3:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month3
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month3
 	case 4:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month4
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month4
 	case 5:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month5
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month5
 	case 6:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month6
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month6
 	case 7:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month7
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month7
 	case 8:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month8
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month8
 	case 9:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month9
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month9
 	case 10:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month10
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month10
 	case 11:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month11
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month11
 	case 12:
-		return t.rules.DateTime.FormatNames.Months.Abbreviated.Month12
+		return t.Rules.DateTime.FormatNames.Months.Abbreviated.Month12
 	}
 
 	return ""
@@ -296,29 +296,29 @@ func (t *Translator) formatDateTimeComponentMonthAbbreviated(month int) string {
 func (t *Translator) formatDateTimeComponentMonthWide(month int) string {
 	switch month {
 	case 1:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month1
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month1
 	case 2:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month2
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month2
 	case 3:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month3
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month3
 	case 4:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month4
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month4
 	case 5:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month5
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month5
 	case 6:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month6
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month6
 	case 7:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month7
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month7
 	case 8:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month8
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month8
 	case 9:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month9
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month9
 	case 10:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month10
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month10
 	case 11:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month11
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month11
 	case 12:
-		return t.rules.DateTime.FormatNames.Months.Wide.Month12
+		return t.Rules.DateTime.FormatNames.Months.Wide.Month12
 	}
 
 	return ""
@@ -329,29 +329,29 @@ func (t *Translator) formatDateTimeComponentMonthWide(month int) string {
 func (t *Translator) formatDateTimeComponentMonthNarrow(month int) string {
 	switch month {
 	case 1:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month1
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month1
 	case 2:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month2
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month2
 	case 3:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month3
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month3
 	case 4:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month4
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month4
 	case 5:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month5
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month5
 	case 6:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month6
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month6
 	case 7:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month7
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month7
 	case 8:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month8
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month8
 	case 9:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month9
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month9
 	case 10:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month10
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month10
 	case 11:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month11
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month11
 	case 12:
-		return t.rules.DateTime.FormatNames.Months.Narrow.Month12
+		return t.Rules.DateTime.FormatNames.Months.Narrow.Month12
 	}
 
 	return ""
@@ -380,19 +380,19 @@ func (t *Translator) formatDateTimeComponentDayOfWeek(datetime time.Time, length
 func (t *Translator) formatDateTimeComponentDayOfWeekAbbreviated(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
 	case time.Sunday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Sun
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Sun
 	case time.Monday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Mon
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Mon
 	case time.Tuesday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Tue
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Tue
 	case time.Wednesday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Wed
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Wed
 	case time.Thursday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Thu
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Thu
 	case time.Friday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Fri
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Fri
 	case time.Saturday:
-		return t.rules.DateTime.FormatNames.Days.Abbreviated.Sat
+		return t.Rules.DateTime.FormatNames.Days.Abbreviated.Sat
 	}
 
 	return ""
@@ -403,19 +403,19 @@ func (t *Translator) formatDateTimeComponentDayOfWeekAbbreviated(dayOfWeek time.
 func (t *Translator) formatDateTimeComponentDayOfWeekShort(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
 	case time.Sunday:
-		return t.rules.DateTime.FormatNames.Days.Short.Sun
+		return t.Rules.DateTime.FormatNames.Days.Short.Sun
 	case time.Monday:
-		return t.rules.DateTime.FormatNames.Days.Short.Mon
+		return t.Rules.DateTime.FormatNames.Days.Short.Mon
 	case time.Tuesday:
-		return t.rules.DateTime.FormatNames.Days.Short.Tue
+		return t.Rules.DateTime.FormatNames.Days.Short.Tue
 	case time.Wednesday:
-		return t.rules.DateTime.FormatNames.Days.Short.Wed
+		return t.Rules.DateTime.FormatNames.Days.Short.Wed
 	case time.Thursday:
-		return t.rules.DateTime.FormatNames.Days.Short.Thu
+		return t.Rules.DateTime.FormatNames.Days.Short.Thu
 	case time.Friday:
-		return t.rules.DateTime.FormatNames.Days.Short.Fri
+		return t.Rules.DateTime.FormatNames.Days.Short.Fri
 	case time.Saturday:
-		return t.rules.DateTime.FormatNames.Days.Short.Sat
+		return t.Rules.DateTime.FormatNames.Days.Short.Sat
 	}
 
 	return ""
@@ -426,19 +426,19 @@ func (t *Translator) formatDateTimeComponentDayOfWeekShort(dayOfWeek time.Weekda
 func (t *Translator) formatDateTimeComponentDayOfWeekWide(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
 	case time.Sunday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Sun
+		return t.Rules.DateTime.FormatNames.Days.Wide.Sun
 	case time.Monday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Mon
+		return t.Rules.DateTime.FormatNames.Days.Wide.Mon
 	case time.Tuesday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Tue
+		return t.Rules.DateTime.FormatNames.Days.Wide.Tue
 	case time.Wednesday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Wed
+		return t.Rules.DateTime.FormatNames.Days.Wide.Wed
 	case time.Thursday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Thu
+		return t.Rules.DateTime.FormatNames.Days.Wide.Thu
 	case time.Friday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Fri
+		return t.Rules.DateTime.FormatNames.Days.Wide.Fri
 	case time.Saturday:
-		return t.rules.DateTime.FormatNames.Days.Wide.Sat
+		return t.Rules.DateTime.FormatNames.Days.Wide.Sat
 	}
 
 	return ""
@@ -449,19 +449,19 @@ func (t *Translator) formatDateTimeComponentDayOfWeekWide(dayOfWeek time.Weekday
 func (t *Translator) formatDateTimeComponentDayOfWeekNarrow(dayOfWeek time.Weekday) string {
 	switch dayOfWeek {
 	case time.Sunday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Sun
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Sun
 	case time.Monday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Mon
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Mon
 	case time.Tuesday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Tue
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Tue
 	case time.Wednesday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Wed
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Wed
 	case time.Thursday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Thu
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Thu
 	case time.Friday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Fri
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Fri
 	case time.Saturday:
-		return t.rules.DateTime.FormatNames.Days.Narrow.Sat
+		return t.Rules.DateTime.FormatNames.Days.Narrow.Sat
 	}
 
 	return ""
@@ -579,28 +579,28 @@ func (t *Translator) formatDateTimeComponentPeriod(datetime time.Time, length in
 // component.
 func (t *Translator) formatDateTimeComponentPeriodAbbreviated(hour int) string {
 	if hour < 12 {
-		return t.rules.DateTime.FormatNames.Periods.Abbreviated.AM
+		return t.Rules.DateTime.FormatNames.Periods.Abbreviated.AM
 	}
 
-	return t.rules.DateTime.FormatNames.Periods.Abbreviated.PM
+	return t.Rules.DateTime.FormatNames.Periods.Abbreviated.PM
 }
 
 // formatDateTimeComponentPeriodWide renders a full period component.
 func (t *Translator) formatDateTimeComponentPeriodWide(hour int) string {
 	if hour < 12 {
-		return t.rules.DateTime.FormatNames.Periods.Wide.AM
+		return t.Rules.DateTime.FormatNames.Periods.Wide.AM
 	}
 
-	return t.rules.DateTime.FormatNames.Periods.Wide.PM
+	return t.Rules.DateTime.FormatNames.Periods.Wide.PM
 }
 
 // formatDateTimeComponentPeriodNarrow renders a super-short period component.
 func (t *Translator) formatDateTimeComponentPeriodNarrow(hour int) string {
 	if hour < 12 {
-		return t.rules.DateTime.FormatNames.Periods.Narrow.AM
+		return t.Rules.DateTime.FormatNames.Periods.Narrow.AM
 	}
 
-	return t.rules.DateTime.FormatNames.Periods.Narrow.PM
+	return t.Rules.DateTime.FormatNames.Periods.Narrow.PM
 }
 
 // formatDateTimeComponentQuarter renders a calendar quarter component - this
@@ -685,7 +685,7 @@ func (t *Translator) parseDateTimeFormat(pattern string) ([]*datetimePatternComp
 		}
 		if char == string(datetimeFormatTimeSeparator) {
 			component := &datetimePatternComponent{
-				pattern:       t.rules.DateTime.TimeSeparator,
+				pattern:       t.Rules.DateTime.TimeSeparator,
 				componentType: datetimePatternComponentLiteral,
 			}
 			format = append(format, component)

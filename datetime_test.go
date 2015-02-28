@@ -1,9 +1,10 @@
 package i18n
 
 import (
+	"log"
 	"time"
 
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 var (
@@ -282,6 +283,9 @@ func (s *MySuite) TestFormatDateTime(c *C) {
 
 	for locale, expected := range locales {
 		t, _ := f.GetTranslator(locale)
+
+		log.Println(t.Rules.DateTime.FormatNames.Days.Wide.Fri)
+
 		d, err := t.FormatDateTime(DateFormatShort, datetime)
 
 		if d != expected {
@@ -295,13 +299,13 @@ func (s *MySuite) TestFormatDateTime(c *C) {
 	// test the private method
 	checkAll := "G y yy yyyy M MM MMM MMMM MMMMM E EE EEE EEEE EEEEE d dd h hh H HH m mm s ss a aaa aaaa aaaaa Q z v 'literal':'literal'   ,   "
 	shouldMatch := "2006 06 2006 1 01 Jan January J Monday Mo Mon Monday M 2 02 3 03 15 15 4 04 5 05 PM PM PM p    literal#literal"
-	separator := tEn.rules.DateTime.TimeSeparator
-	tEn.rules.DateTime.TimeSeparator = "#"
+	separator := tEn.Rules.DateTime.TimeSeparator
+	tEn.Rules.DateTime.TimeSeparator = "#"
 	patternToCheckEverything, _ := tEn.parseDateTimeFormat(checkAll)
-	tEn.rules.DateTime.TimeSeparator = separator
+	tEn.Rules.DateTime.TimeSeparator = separator
 
 	custom, err := tEn.formatDateTime(datetime, patternToCheckEverything)
-	tEn.rules.DateTime.TimeSeparator = separator
+	tEn.Rules.DateTime.TimeSeparator = separator
 
 	c.Check(err, IsNil)
 
@@ -443,12 +447,12 @@ func (s *MySuite) TestFormatDateTimeComponent(c *C) {
 	_, err = tEn.formatDateTimeComponent(datetime, "ssssss")
 	c.Check(err, NotNil)
 
-	abbr := tEn.rules.DateTime.FormatNames.Periods.Abbreviated.PM
-	narrow := tEn.rules.DateTime.FormatNames.Periods.Narrow.PM
-	wide := tEn.rules.DateTime.FormatNames.Periods.Wide.PM
-	tEn.rules.DateTime.FormatNames.Periods.Abbreviated.PM = "abbr"
-	tEn.rules.DateTime.FormatNames.Periods.Narrow.PM = "narrow"
-	tEn.rules.DateTime.FormatNames.Periods.Wide.PM = "wide"
+	abbr := tEn.Rules.DateTime.FormatNames.Periods.Abbreviated.PM
+	narrow := tEn.Rules.DateTime.FormatNames.Periods.Narrow.PM
+	wide := tEn.Rules.DateTime.FormatNames.Periods.Wide.PM
+	tEn.Rules.DateTime.FormatNames.Periods.Abbreviated.PM = "abbr"
+	tEn.Rules.DateTime.FormatNames.Periods.Narrow.PM = "narrow"
+	tEn.Rules.DateTime.FormatNames.Periods.Wide.PM = "wide"
 	str, err = tEn.formatDateTimeComponent(datetime, "a")
 	c.Check(err, IsNil)
 	c.Check(str, Equals, "wide")
@@ -461,9 +465,9 @@ func (s *MySuite) TestFormatDateTimeComponent(c *C) {
 	str, err = tEn.formatDateTimeComponent(datetime, "aaaaa")
 	c.Check(err, IsNil)
 	c.Check(str, Equals, "narrow")
-	tEn.rules.DateTime.FormatNames.Periods.Abbreviated.PM = abbr
-	tEn.rules.DateTime.FormatNames.Periods.Narrow.PM = narrow
-	tEn.rules.DateTime.FormatNames.Periods.Wide.PM = wide
+	tEn.Rules.DateTime.FormatNames.Periods.Abbreviated.PM = abbr
+	tEn.Rules.DateTime.FormatNames.Periods.Narrow.PM = narrow
+	tEn.Rules.DateTime.FormatNames.Periods.Wide.PM = wide
 
 	_, err = tEn.formatDateTimeComponent(datetime, "aaaaaa")
 	c.Check(err, NotNil)

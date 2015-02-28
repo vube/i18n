@@ -3,7 +3,7 @@ package i18n
 import (
 	"reflect"
 
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 func (s *MySuite) TestLoad(c *C) {
