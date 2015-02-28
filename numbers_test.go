@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 func (s *MySuite) TestFormatCurrency(c *C) {

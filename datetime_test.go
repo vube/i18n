@@ -3,7 +3,7 @@ package i18n
 import (
 	"time"
 
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 var (
