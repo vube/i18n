@@ -3,11 +3,11 @@ package i18n
 import (
 	"reflect"
 
-	. "launchpad.net/gocheck"
+	. "gopkg.in/check.v1"
 )
 
 func (s *MySuite) TestLoad(c *C) {
-	t := new(translatorRules)
+	t := new(TranslatorRules)
 
 	errs := t.load([]string{"does/not/exist/xx.yaml"})
 	c.Check(errs, Not(HasLen), 0)
@@ -51,7 +51,7 @@ func (s *MySuite) TestLoad(c *C) {
 	}
 
 	for _, l := range locales {
-		t := new(translatorRules)
+		t := new(TranslatorRules)
 		errs = t.load([]string{"data/rules/" + l + ".yaml"})
 		c.Check(errs, HasLen, 0)
 	}
@@ -66,7 +66,7 @@ func (s *MySuite) TestLoad(c *C) {
 	}
 
 	for _, l := range locales {
-		t := new(translatorRules)
+		t := new(TranslatorRules)
 		errs = t.load([]string{"data/rules/" + l + ".yaml"})
 		c.Log(l)
 		c.Check(errs, HasLen, 1)

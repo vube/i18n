@@ -29,7 +29,7 @@ type TranslatorFactory struct {
 type Translator struct {
 	messages map[string]string
 	locale   string
-	rules    *translatorRules
+	rules    *TranslatorRules
 	fallback *Translator
 }
 
@@ -189,7 +189,7 @@ func (f *TranslatorFactory) GetTranslator(localeCode string) (t *Translator, err
 		errors = append(errors, e)
 	}
 
-	rules := new(translatorRules)
+	rules := new(TranslatorRules)
 	files := []string{}
 
 	// TODO: the rules loading logic is fairly complex, and there are some
@@ -358,6 +358,17 @@ func (t *Translator) Pluralize(key string, number float64, numberStr string) (tr
 		errors = append(errors, err)
 	}
 	return
+}
+
+// Translate returns the translated message, performang any substitutions
+// requested in the substitutions map. If neither this translator nor its
+// fallback translator (or the fallback's fallback and so on) have a translation
+// for the requested key, and empty string and an error will be returned.
+func (t *Translator) Rules() TranslatorRules {
+
+	rules := *t.rules
+
+	return rules
 }
 
 // Direction returns the text directionality of the locale's writing system

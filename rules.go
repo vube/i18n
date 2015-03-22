@@ -16,9 +16,9 @@ const (
 	direction_rtl = "RTL"
 )
 
-// translatorRules is a struct containing all of the information unmarshalled
+// TranslatorRules is a struct containing all of the information unmarshalled
 // from a locale rules file.
-type translatorRules struct {
+type TranslatorRules struct {
 	Plural         string `yaml:"plural,omitempty"`
 	PluralRuleFunc pluralRule
 	Direction      string `yaml:"direction,omitempty"`
@@ -160,14 +160,14 @@ type translatorRules struct {
 	} `yaml:"datetime,omitempty"`
 }
 
-// currency is a struct that's used in the above translatorRules struct for
+// currency is a struct that's used in the above TranslatorRules struct for
 // capturing the rule info for a single currency
 type currency struct {
 	Symbol string `yaml:"symbol,omitempty"`
 }
 
 // load unmarshalls rule data from yaml files into the translator's rules
-func (t *translatorRules) load(files []string) (errors []error) {
+func (t *TranslatorRules) load(files []string) (errors []error) {
 
 	for _, file := range files {
 		_, statErr := os.Stat(file)
@@ -178,7 +178,7 @@ func (t *translatorRules) load(files []string) (errors []error) {
 				errors = append(errors, translatorError{message: "can't open rules file: " + readErr.Error()})
 			}
 
-			tNew := new(translatorRules)
+			tNew := new(TranslatorRules)
 			yamlErr := yaml.Unmarshal(contents, tNew)
 
 			if yamlErr != nil {
@@ -214,10 +214,10 @@ func (t *translatorRules) load(files []string) (errors []error) {
 	return
 }
 
-// merge takes another translatorRules instance and safely merges its metadata
+// merge takes another TranslatorRules instance and safely merges its metadata
 // into this instance. this replaces yaml marshalling directly into the same
 // instance - as that doesn't do what we want for deep merging.
-func (t *translatorRules) merge(tNew *translatorRules) {
+func (t *TranslatorRules) merge(tNew *TranslatorRules) {
 
 	t.Plural = stringMerge(t.Plural, tNew.Plural)
 
