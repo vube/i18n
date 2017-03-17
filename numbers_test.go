@@ -1,8 +1,6 @@
 package i18n
 
-import (
-	. "gopkg.in/check.v1"
-)
+import . "gopkg.in/check.v1"
 
 func (s *MySuite) TestFormatCurrency(c *C) {
 
@@ -474,4 +472,9 @@ func (s *MySuite) TestNumberRound(c *C) {
 	dec = 3
 	rounded = numberRound(num, dec)
 	c.Check(rounded, Equals, "1.235")
+
+	num = 0.08627709746360779
+	dec = 2
+	rounded = numberRound(num, dec)
+	c.Check(rounded, Equals, "0.09")
 }
