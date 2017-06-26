@@ -18,6 +18,8 @@ currencies:
     symbol: CA$
   CNY:
     symbol: "CN\xA5"
+  CZK:
+    symbol: "K\u010D"
   EUR:
     symbol: "\u20AC"
   GBP:
