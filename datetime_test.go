@@ -658,3 +658,41 @@ func (s *MySuite) TestLastSequenceIndex(c *C) {
 	str = "aab"
 	c.Check(lastSequenceIndex(str), Equals, 1)
 }
+
+func (s *MySuite) TestFormatMidnight(c *C) {
+	f, _ := NewTranslatorFactory(
+		[]string{"data/rules"},
+		[]string{"data/messages"},
+		"en",
+	)
+
+	c.Assert(f, NotNil)
+
+	tEn, _ := f.GetTranslator("en")
+
+	c.Assert(tEn, NotNil)
+
+	datetime, _ := time.Parse(dateTimeString, "Jan 2, 2006 at 12:04:05am")
+
+	str, err := tEn.formatDateTimeComponent(datetime, "h")
+	c.Check(err, IsNil)
+	c.Check(str, Equals, "12")
+
+	str, err = tEn.formatDateTimeComponent(datetime, "hh")
+	c.Check(err, IsNil)
+	c.Check(str, Equals, "12")
+
+	_, err = tEn.formatDateTimeComponent(datetime, "hhhhhh")
+	c.Check(err, NotNil)
+
+	str, err = tEn.formatDateTimeComponent(datetime, "H")
+	c.Check(err, IsNil)
+	c.Check(str, Equals, "0")
+
+	str, err = tEn.formatDateTimeComponent(datetime, "HH")
+	c.Check(err, IsNil)
+	c.Check(str, Equals, "00")
+
+	_, err = tEn.formatDateTimeComponent(datetime, "HHHHHH")
+	c.Check(err, NotNil)
+}
