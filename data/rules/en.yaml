@@ -12,6 +12,8 @@ numbers:
     currency: "\xA4#,##0.00;(\xA4#,##0.00)"
     percent: '#,##0%'
 currencies:
+  CZK:
+    symbol: "K\u010D"
   JPY:
     symbol: "\xA5"
   USD:
