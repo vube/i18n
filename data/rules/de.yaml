@@ -20,8 +20,6 @@ currencies:
     symbol: R$
   CAD:
     symbol: CA$
-  CHF:
-    symbol: CHF
   CNY:
     symbol: "CN\xA5"
   EUR:
