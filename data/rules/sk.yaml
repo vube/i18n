@@ -20,8 +20,6 @@ currencies:
     symbol: CAD
   CNY:
     symbol: CNY
-  CZK:
-    symbol: "K\u010D"
   GBP:
     symbol: GBP
   HKD:

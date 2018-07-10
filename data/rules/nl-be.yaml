@@ -2,9 +2,6 @@ direction: LTR
 numbers:
   formats:
     currency: "#,##0.00\_\xA4"
-currencies:
-  CZK:
-    symbol: "K\u010D"
 datetime:
   formats:
     date:
