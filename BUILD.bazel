@@ -1,0 +1,38 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "datetime.go",
+        "doc.go",
+        "i18n.go",
+        "numbers.go",
+        "plurals.go",
+        "rules.go",
+        "sort.go",
+    ],
+    data = glob(["data/**"]),
+    importpath = "github.com/yext/i18n",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@in_gopkg_yaml_v1//:go_default_library",
+        "@org_golang_x_text//collate:go_default_library",
+        "@org_golang_x_text//language:go_default_library",
+        "@org_golang_x_text//unicode/norm:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "datetime_test.go",
+        "example_test.go",
+        "i18n_test.go",
+        "numbers_test.go",
+        "plurals_test.go",
+        "rules_test.go",
+        "sort_test.go",
+    ],
+    embed = [":go_default_library"],
+    deps = ["@net_launchpad_gocheck//:go_default_library"],
+)
