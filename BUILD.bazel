@@ -17,7 +17,7 @@ go_library(
         "rules.go",
         "sort.go",
     ],
-    data = glob(["data/**"]),
+    # data = glob(["data/**"]),
     importpath = "github.com/yext/i18n",
     visibility = ["//visibility:public"],
     deps = [
