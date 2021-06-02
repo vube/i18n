@@ -10,6 +10,10 @@ numbers:
     currency: "\xA4\_#,##0.00"
     percent: '#,##0%'
 currencies:
+  AED:
+    symbol: AED
+  ARS:
+    symbol: ARS
   AUD:
     symbol: A$
   BRL:
@@ -40,6 +44,8 @@ currencies:
     symbol: MX$
   NZD:
     symbol: NZ$
+  PEN:
+    symbol: PEN
   THB:
     symbol: "\u0E3F"
   TWD:
